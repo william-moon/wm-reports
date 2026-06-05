@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSC Dashboard — WM Command Center</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header-left h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: -0.5px;
+  }
+  .header-left p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .header-right {
+    font-size: 13px;
+    color: #64748b;
+    text-align: right;
+  }
+  .header-right strong { color: #94a3b8; }
+
+  /* ── Stat Cards ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .stat-card {
+    background: #1e2330;
+    border: 1px solid #2d3448;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  .stat-card .value {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-card .sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+  }
+  .stat-card.green .value { color: #4ade80; }
+  .stat-card.yellow .value { color: #fbbf24; }
+  .stat-card.red .value { color: #f87171; }
+  .stat-card.blue .value { color: #60a5fa; }
+  .stat-card.purple .value { color: #c084fc; }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-header h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+  .section-header .account-badge {
+    font-size: 12px;
+    color: #64748b;
+    background: #1e2330;
+    border: 1px solid #2d3448;
+    border-radius: 6px;
+    padding: 2px 8px;
+  }
+  .section-header .count {
+    margin-left: auto;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  /* ── Table ── */
+  .table-wrap {
+    border: 1px solid #2d3448;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead th {
+    background: #161b27;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  thead th.num { text-align: right; }
+  tbody tr {
+    border-top: 1px solid #1e2330;
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: #1a2035; }
+  tbody tr.row-warn { background: rgba(251,191,36,0.04); }
+  tbody tr.row-error { background: rgba(248,113,113,0.05); }
+  td {
+    padding: 13px 16px;
+    vertical-align: middle;
+  }
+  td.num { text-align: right; color: #94a3b8; font-variant-numeric: tabular-nums; }
+
+  .domain-cell a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .domain-cell a:hover { color: #60a5fa; text-decoration: underline; }
+  .domain-group {
+    display: block;
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-pass    { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .badge-neutral { background: rgba(251,191,36,0.15); color: #fbbf24; cursor: help; }
+  .badge-fail    { background: rgba(248,113,113,0.15); color: #f87171; }
+  .badge-unknown { background: rgba(100,116,139,0.2);  color: #94a3b8; }
+
+  .na { color: #334155; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    color: #334155;
+    font-size: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #1e2330;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Google Search Console Dashboard</h1>
+    <p>WM Command Center · All domains · Last 28 days</p>
+  </div>
+  <div class="header-right">
+    <strong>Generated</strong><br>Friday, June 5, 2026 at 12:22 AM
+  </div>
+</div>
+
+<!-- Stat Cards -->
+<div class="stats">
+  <div class="stat-card green">
+    <div class="label">Indexed</div>
+    <div class="value">14</div>
+    <div class="sub">of 20 domains</div>
+  </div>
+  <div class="stat-card yellow">
+    <div class="label">Warnings</div>
+    <div class="value">4</div>
+    <div class="sub">need attention</div>
+  </div>
+  <div class="stat-card red">
+    <div class="label">Errors</div>
+    <div class="value">2</div>
+    <div class="sub">not indexed</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="label">Total Clicks</div>
+    <div class="value">234</div>
+    <div class="sub">last 28 days</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="label">Impressions</div>
+    <div class="value">69,762</div>
+    <div class="sub">last 28 days</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="label">Avg Position</div>
+    <div class="value">16.2</div>
+    <div class="sub">across all domains</div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <h2>William Moon</h2>
+    <span class="account-badge">william.o.moon@gmail.com</span>
+    <span class="count">13 properties</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Status</th>
+          <th class="num">Clicks</th>
+          <th class="num">Impressions</th>
+          <th class="num">CTR</th>
+          <th class="num">Avg Position</th>
+          <th class="num">Last Crawled</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://moonfamilyenterprise.com" target="_blank">moonfamilyenterprise.com</a>
+          <span class="domain-group">Moon Family Enterprise</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">0</td>
+        <td class="num">190</td>
+        <td class="num">0.0%</td>
+        <td class="num">24.1</td>
+        <td class="num">May 22, 2026</td>
+      </tr>
+      <tr class="row-warn">
+        <td class="domain-cell">
+          <a href="https://keilbartfreedomsolutions.com" target="_blank">keilbartfreedomsolutions.com</a>
+          <span class="domain-group">Keilbart Freedom Solutions</span>
+        </td>
+        <td><span class="badge badge-neutral" title="Duplicate without user-selected canonical">Warning</span></td>
+        <td class="num">0</td>
+        <td class="num">12</td>
+        <td class="num">0.0%</td>
+        <td class="num">2</td>
+        <td class="num">May 11, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://mortgage-lender.keilbartfreedomsolutions.com" target="_blank">mortgage-lender.keilbartfreedomsolutions.com</a>
+          <span class="domain-group">Keilbart Freedom Solutions</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">0</td>
+        <td class="num">8</td>
+        <td class="num">0.0%</td>
+        <td class="num">3.3</td>
+        <td class="num">Jun 1, 2026</td>
+      </tr>
+      <tr class="row-warn">
+        <td class="domain-cell">
+          <a href="https://highdesertbossmoms.com" target="_blank">highdesertbossmoms.com</a>
+          <span class="domain-group">High Desert Boss Moms</span>
+        </td>
+        <td><span class="badge badge-neutral" title="Page with redirect">Warning</span></td>
+        <td class="num">11</td>
+        <td class="num">351</td>
+        <td class="num">3.1%</td>
+        <td class="num">5.9</td>
+        <td class="num">May 29, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://clientsplease.com" target="_blank">clientsplease.com</a>
+          <span class="domain-group">Clients Please</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">12</td>
+        <td class="num">4,130</td>
+        <td class="num">0.3%</td>
+        <td class="num">24.2</td>
+        <td class="num">Jun 4, 2026</td>
+      </tr>
+      <tr class="row-warn">
+        <td class="domain-cell">
+          <a href="https://kayakcyber.com" target="_blank">kayakcyber.com</a>
+          <span class="domain-group">Kayak Cyber</span>
+        </td>
+        <td><span class="badge badge-neutral" title="Page with redirect">Warning</span></td>
+        <td class="num">8</td>
+        <td class="num">1,017</td>
+        <td class="num">0.8%</td>
+        <td class="num">18.3</td>
+        <td class="num">May 30, 2026</td>
+      </tr>
+      <tr class="row-warn">
+        <td class="domain-cell">
+          <a href="https://nishiatslater.com" target="_blank">nishiatslater.com</a>
+          <span class="domain-group">Nishi at Slater</span>
+        </td>
+        <td><span class="badge badge-neutral" title="Page with redirect">Warning</span></td>
+        <td class="num">1</td>
+        <td class="num">396</td>
+        <td class="num">0.3%</td>
+        <td class="num">7.7</td>
+        <td class="num">May 17, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://thewellorderedspace.com" target="_blank">thewellorderedspace.com</a>
+          <span class="domain-group">The Well Ordered Space</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">62</td>
+        <td class="num">4,914</td>
+        <td class="num">1.3%</td>
+        <td class="num">9.9</td>
+        <td class="num">Jun 4, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://401k-rollover-to-ira.moonfamilyenterprise.com" target="_blank">401k-rollover-to-ira.moonfamilyenterprise.com</a>
+          <span class="domain-group">Moon Family Enterprise</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">0</td>
+        <td class="num">15</td>
+        <td class="num">0.0%</td>
+        <td class="num">24.2</td>
+        <td class="num">Apr 8, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://go.moonfamilyenterprise.com" target="_blank">go.moonfamilyenterprise.com</a>
+          <span class="domain-group">Moon Family Enterprise</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">0</td>
+        <td class="num">26</td>
+        <td class="num">0.0%</td>
+        <td class="num">11.4</td>
+        <td class="num">May 1, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://accountant-and-bookkeeping-services.solve-now.com" target="_blank">accountant-and-bookkeeping-services.solve-now.com</a>
+          <span class="domain-group">Solve Now</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">5</td>
+        <td class="num">1,778</td>
+        <td class="num">0.3%</td>
+        <td class="num">26.2</td>
+        <td class="num">Jun 1, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://carport-builder.solve-now.com" target="_blank">carport-builder.solve-now.com</a>
+          <span class="domain-group">Solve Now</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">5</td>
+        <td class="num">859</td>
+        <td class="num">0.6%</td>
+        <td class="num">20.3</td>
+        <td class="num">Apr 8, 2026</td>
+      </tr>
+      <tr class="row-error">
+        <td class="domain-cell">
+          <a href="https://concrete-contractor.solve-now.com" target="_blank">concrete-contractor.solve-now.com</a>
+          <span class="domain-group">Solve Now</span>
+        </td>
+        <td><span class="badge badge-unknown">Unknown</span></td>
+        <td class="num">3</td>
+        <td class="num">1,133</td>
+        <td class="num">0.3%</td>
+        <td class="num">21.8</td>
+        <td class="num"><span class="na">Never</span></td>
+      </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <h2>Charlene Thomson</h2>
+    <span class="account-badge">charlenethomson2024@gmail.com</span>
+    <span class="count">6 properties</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Status</th>
+          <th class="num">Clicks</th>
+          <th class="num">Impressions</th>
+          <th class="num">CTR</th>
+          <th class="num">Avg Position</th>
+          <th class="num">Last Crawled</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://waddellenterprises.com" target="_blank">waddellenterprises.com</a>
+          <span class="domain-group">Waddell Enterprises</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">11</td>
+        <td class="num">2,189</td>
+        <td class="num">0.5%</td>
+        <td class="num">7.5</td>
+        <td class="num">May 31, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://azcorazulconstruction.com" target="_blank">azcorazulconstruction.com</a>
+          <span class="domain-group">Az Corazul Construction</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">20</td>
+        <td class="num">6,976</td>
+        <td class="num">0.3%</td>
+        <td class="num">21.5</td>
+        <td class="num">May 31, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://teamakademy.com" target="_blank">teamakademy.com</a>
+          <span class="domain-group">Team Akademy</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">14</td>
+        <td class="num">18,374</td>
+        <td class="num">0.1%</td>
+        <td class="num">39.8</td>
+        <td class="num">Jun 3, 2026</td>
+      </tr>
+      <tr class="row-error">
+        <td class="domain-cell">
+          <a href="https://cincyluxeclean.com" target="_blank">cincyluxeclean.com</a>
+          <span class="domain-group">Cincy Luxe Clean</span>
+        </td>
+        <td><span class="badge badge-unknown">Unknown</span></td>
+        <td class="num"><span class="na">—</span></td>
+        <td class="num"><span class="na">—</span></td>
+        <td class="num"><span class="na">—</span></td>
+        <td class="num"><span class="na">—</span></td>
+        <td class="num"><span class="na">Never</span></td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://mobile-caterer-highdesert.solve-now.com" target="_blank">mobile-caterer-highdesert.solve-now.com</a>
+          <span class="domain-group">Solve Now</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">3</td>
+        <td class="num">275</td>
+        <td class="num">1.1%</td>
+        <td class="num">14.6</td>
+        <td class="num">May 31, 2026</td>
+      </tr>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://stitchandburn.solve-now.com" target="_blank">stitchandburn.solve-now.com</a>
+          <span class="domain-group">Solve Now</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">37</td>
+        <td class="num">391</td>
+        <td class="num">9.5%</td>
+        <td class="num">7.7</td>
+        <td class="num">May 29, 2026</td>
+      </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <h2>Clients Please LLC</h2>
+    <span class="account-badge">clientspleasellc@gmail.com</span>
+    <span class="count">1 properties</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Status</th>
+          <th class="num">Clicks</th>
+          <th class="num">Impressions</th>
+          <th class="num">CTR</th>
+          <th class="num">Avg Position</th>
+          <th class="num">Last Crawled</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr class="">
+        <td class="domain-cell">
+          <a href="https://financial-advisorpro.com" target="_blank">financial-advisorpro.com</a>
+          <span class="domain-group">Financial Advisor Pro</span>
+        </td>
+        <td><span class="badge badge-pass">Indexed</span></td>
+        <td class="num">42</td>
+        <td class="num">26,728</td>
+        <td class="num">0.2%</td>
+        <td class="num">17.4</td>
+        <td class="num">Jun 4, 2026</td>
+      </tr></tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="footer">
+  WM Command Center · Data sourced from Google Search Console API · Generated by Billy
+</div>
+
+</body>
+</html>

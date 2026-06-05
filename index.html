@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WM Command Center Reports</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .container { text-align: center; padding: 48px 24px; }
+  h1 { font-size: 28px; font-weight: 700; color: #f8fafc; margin-bottom: 8px; }
+  p { color: #64748b; font-size: 14px; margin-bottom: 48px; }
+  .cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .card { background: #1e2330; border: 1px solid #2d3448; border-radius: 16px; padding: 32px 40px; text-decoration: none; color: inherit; transition: border-color 0.2s, transform 0.2s; width: 260px; }
+  .card:hover { border-color: #60a5fa; transform: translateY(-3px); }
+  .card .icon { font-size: 40px; margin-bottom: 16px; }
+  .card h2 { font-size: 18px; font-weight: 600; color: #f8fafc; margin-bottom: 8px; }
+  .card .desc { font-size: 13px; color: #64748b; line-height: 1.5; }
+  .card .freq { display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; background: rgba(96,165,250,0.12); color: #60a5fa; padding: 4px 10px; border-radius: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>WM Command Center</h1>
+  <p>Google Search Console Reports</p>
+  <div class="cards">
+    <a class="card" href="gsc-dashboard.html">
+      <div class="icon">📊</div>
+      <h2>Daily Dashboard</h2>
+      <div class="desc">Indexing status, crawl dates, and traffic for all 20 domains</div>
+      <span class="freq">Daily · 5 AM AZ</span>
+    </a>
+    <a class="card" href="gsc-weekly-report.html">
+      <div class="icon">📈</div>
+      <h2>Weekly Report</h2>
+      <div class="desc">Total impressions &amp; clicks vs your 333,400 / 5,000 weekly goals</div>
+      <span class="freq">Saturdays · 5:30 AM AZ</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

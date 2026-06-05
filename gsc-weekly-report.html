@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSC Weekly Report — WM Command Center</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; padding: 32px 24px; }
+  .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; color: #f8fafc; letter-spacing: -0.5px; }
+  .header p { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .header-right { font-size: 13px; color: #64748b; text-align: right; }
+  .header-right strong { color: #94a3b8; }
+
+  .goal-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+  @media (max-width: 600px) { .goal-cards { grid-template-columns: 1fr; } }
+  .goal-card { background: #1e2330; border: 1px solid #2d3448; border-radius: 16px; padding: 28px; }
+  .goal-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 10px; }
+  .goal-card .numbers { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
+  .goal-card .actual { font-size: 42px; font-weight: 800; line-height: 1; }
+  .goal-card.impressions .actual { color: #60a5fa; }
+  .goal-card.clicks .actual { color: #4ade80; }
+  .goal-card .goal-num { font-size: 16px; color: #475569; }
+  .goal-card .pct { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+  .goal-card.impressions .pct { color: #60a5fa; }
+  .goal-card.clicks .pct { color: #4ade80; }
+  .bar-track { background: #0f1117; border-radius: 8px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 8px; transition: width 0.3s; }
+  .goal-card.impressions .bar-fill { background: linear-gradient(90deg, #1d4ed8, #60a5fa); }
+  .goal-card.clicks .bar-fill { background: linear-gradient(90deg, #15803d, #4ade80); }
+  .goal-card .needed { font-size: 12px; color: #64748b; margin-top: 10px; }
+  .goal-card .needed span { color: #94a3b8; font-weight: 500; }
+
+  .section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; color: #64748b; margin-bottom: 14px; }
+  .table-wrap { border: 1px solid #2d3448; border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead th { background: #161b27; color: #64748b; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; padding: 12px 16px; text-align: left; }
+  thead th.num { text-align: right; }
+  tbody tr { border-top: 1px solid #1e2330; }
+  tbody tr:hover { background: #1a2035; }
+  td { padding: 12px 16px; vertical-align: middle; }
+  td.num { text-align: right; color: #94a3b8; font-variant-numeric: tabular-nums; }
+  td a { color: #e2e8f0; text-decoration: none; font-weight: 500; }
+  td a:hover { color: #60a5fa; }
+  .share { font-size: 12px; color: #334155; background: #1e2330; border: 1px solid #2d3448; border-radius: 8px; padding: 3px 8px; }
+  .footer { text-align: center; color: #334155; font-size: 12px; margin-top: 24px; padding-top: 24px; border-top: 1px solid #1e2330; }
+  .back { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #64748b; text-decoration: none; }
+  .back:hover { color: #60a5fa; }
+</style>
+</head>
+<body>
+<a class="back" href="index.html">← All Reports</a>
+<div class="header">
+  <div>
+    <h1>Weekly GSC Report</h1>
+    <p>WM Command Center · May 28 – Jun 4, 2026 · All domains</p>
+  </div>
+  <div class="header-right"><strong>Generated</strong><br>Friday, June 5, 2026 at 12:27 AM</div>
+</div>
+
+<div class="goal-cards">
+  <div class="goal-card impressions">
+    <div class="label">Impressions</div>
+    <div class="numbers">
+      <span class="actual">15,165</span>
+      <span class="goal-num">/ 333,400 goal</span>
+    </div>
+    <div class="pct">4.5% of weekly goal</div>
+    <div class="bar-track"><div class="bar-fill" style="width:4.5%"></div></div>
+    <div class="needed">Need <span>+318,235</span> more to hit goal</div>
+  </div>
+  <div class="goal-card clicks">
+    <div class="label">Clicks</div>
+    <div class="numbers">
+      <span class="actual">44</span>
+      <span class="goal-num">/ 5,000 goal</span>
+    </div>
+    <div class="pct">0.9% of weekly goal</div>
+    <div class="bar-track"><div class="bar-fill" style="width:0.9%"></div></div>
+    <div class="needed">Need <span>+4,956</span> more to hit goal</div>
+  </div>
+</div>
+
+<div class="section-title">All Domains — This Week</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Domain</th>
+        <th class="num">Impressions</th>
+        <th class="num">Clicks</th>
+        <th class="num">CTR</th>
+        <th class="num">% of Total Impr.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td><a href="https://financial-advisorpro.com" target="_blank">financial-advisorpro.com</a></td>
+          <td class="num">5,606</td>
+          <td class="num">7</td>
+          <td class="num">0.12%</td>
+          <td class="num">37.0%</td>
+        </tr><tr>
+          <td><a href="https://teamakademy.com" target="_blank">teamakademy.com</a></td>
+          <td class="num">4,449</td>
+          <td class="num">2</td>
+          <td class="num">0.04%</td>
+          <td class="num">29.3%</td>
+        </tr><tr>
+          <td><a href="https://azcorazulconstruction.com" target="_blank">azcorazulconstruction.com</a></td>
+          <td class="num">1,442</td>
+          <td class="num">6</td>
+          <td class="num">0.42%</td>
+          <td class="num">9.5%</td>
+        </tr><tr>
+          <td><a href="https://thewellorderedspace.com" target="_blank">thewellorderedspace.com</a></td>
+          <td class="num">1,081</td>
+          <td class="num">18</td>
+          <td class="num">1.67%</td>
+          <td class="num">7.1%</td>
+        </tr><tr>
+          <td><a href="https://clientsplease.com" target="_blank">clientsplease.com</a></td>
+          <td class="num">690</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">4.5%</td>
+        </tr><tr>
+          <td><a href="https://waddellenterprises.com" target="_blank">waddellenterprises.com</a></td>
+          <td class="num">444</td>
+          <td class="num">3</td>
+          <td class="num">0.68%</td>
+          <td class="num">2.9%</td>
+        </tr><tr>
+          <td><a href="https://accountant-and-bookkeeping-services.solve-now.com" target="_blank">accountant-and-bookkeeping-services.solve-now.com</a></td>
+          <td class="num">435</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">2.9%</td>
+        </tr><tr>
+          <td><a href="https://kayakcyber.com" target="_blank">kayakcyber.com</a></td>
+          <td class="num">218</td>
+          <td class="num">1</td>
+          <td class="num">0.46%</td>
+          <td class="num">1.4%</td>
+        </tr><tr>
+          <td><a href="https://concrete-contractor.solve-now.com" target="_blank">concrete-contractor.solve-now.com</a></td>
+          <td class="num">191</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">1.3%</td>
+        </tr><tr>
+          <td><a href="https://carport-builder.solve-now.com" target="_blank">carport-builder.solve-now.com</a></td>
+          <td class="num">184</td>
+          <td class="num">1</td>
+          <td class="num">0.54%</td>
+          <td class="num">1.2%</td>
+        </tr><tr>
+          <td><a href="https://nishiatslater.com" target="_blank">nishiatslater.com</a></td>
+          <td class="num">182</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">1.2%</td>
+        </tr><tr>
+          <td><a href="https://stitchandburn.solve-now.com" target="_blank">stitchandburn.solve-now.com</a></td>
+          <td class="num">85</td>
+          <td class="num">5</td>
+          <td class="num">5.88%</td>
+          <td class="num">0.6%</td>
+        </tr><tr>
+          <td><a href="https://highdesertbossmoms.com" target="_blank">highdesertbossmoms.com</a></td>
+          <td class="num">66</td>
+          <td class="num">1</td>
+          <td class="num">1.52%</td>
+          <td class="num">0.4%</td>
+        </tr><tr>
+          <td><a href="https://mobile-caterer-highdesert.solve-now.com" target="_blank">mobile-caterer-highdesert.solve-now.com</a></td>
+          <td class="num">44</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">0.3%</td>
+        </tr><tr>
+          <td><a href="https://moonfamilyenterprise.com" target="_blank">moonfamilyenterprise.com</a></td>
+          <td class="num">40</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">0.3%</td>
+        </tr><tr>
+          <td><a href="https://go.moonfamilyenterprise.com" target="_blank">go.moonfamilyenterprise.com</a></td>
+          <td class="num">7</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">0.0%</td>
+        </tr><tr>
+          <td><a href="https://401k-rollover-to-ira.moonfamilyenterprise.com" target="_blank">401k-rollover-to-ira.moonfamilyenterprise.com</a></td>
+          <td class="num">1</td>
+          <td class="num">0</td>
+          <td class="num">0.00%</td>
+          <td class="num">0.0%</td>
+        </tr><tr>
+          <td><a href="https://keilbartfreedomsolutions.com" target="_blank">keilbartfreedomsolutions.com</a></td>
+          <td class="num">0</td>
+          <td class="num">0</td>
+          <td class="num">—</td>
+          <td class="num">0.0%</td>
+        </tr><tr>
+          <td><a href="https://mortgage-lender.keilbartfreedomsolutions.com" target="_blank">mortgage-lender.keilbartfreedomsolutions.com</a></td>
+          <td class="num">0</td>
+          <td class="num">0</td>
+          <td class="num">—</td>
+          <td class="num">0.0%</td>
+        </tr><tr>
+          <td><a href="https://cincyluxeclean.com" target="_blank">cincyluxeclean.com</a></td>
+          <td class="num">0</td>
+          <td class="num">0</td>
+          <td class="num">—</td>
+          <td class="num">0.0%</td>
+        </tr>
+      <tr style="border-top: 2px solid #2d3448; font-weight: 700;">
+        <td style="color:#f8fafc">TOTAL</td>
+        <td class="num" style="color:#60a5fa">15,165</td>
+        <td class="num" style="color:#4ade80">44</td>
+        <td class="num">—</td>
+        <td class="num">100%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">WM Command Center · Data from Google Search Console · Generated by Billy</div>
+</body>
+</html>
