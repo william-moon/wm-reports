@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAP — Strong Compact Keywords Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1520; color: #d0d8e4; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; }
+  header { background: linear-gradient(135deg, #0d1520, #1a2a40); border-bottom: 2px solid #f0a500; padding: 20px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+  header h1 { font-size: 20px; font-weight: 700; color: #f0a500; letter-spacing: 0.5px; }
+  header .meta { font-size: 11px; color: #7a8ca0; text-align: right; line-height: 1.6; }
+  .controls { background: #131f2e; padding: 12px 28px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #1e3050; position: sticky; top: 64px; z-index: 99; }
+  .controls label { font-size: 11px; color: #7a8ca0; }
+  .controls select, .controls input { background: #0d1520; border: 1px solid #2a3d55; color: #d0d8e4; padding: 5px 9px; border-radius: 4px; font-size: 12px; }
+  .controls button { background: #f0a500; color: #0d1520; border: none; padding: 5px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .controls button:hover { background: #ffbe33; }
+  .stats-bar { background: #111b29; padding: 10px 28px; display: flex; gap: 28px; border-bottom: 1px solid #1a2d45; flex-wrap: wrap; }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-item .val { font-size: 20px; font-weight: 700; color: #f0a500; }
+  .stat-item .lbl { font-size: 10px; color: #5a7090; text-transform: uppercase; letter-spacing: 0.5px; }
+  .notice { margin: 10px 28px; background: #162035; border-left: 3px solid #f0a500; padding: 8px 12px; font-size: 11px; color: #8a9caf; border-radius: 0 4px 4px 0; }
+  main { padding: 0 28px 40px; }
+  .service-section { margin-top: 28px; }
+  .service-header { background: linear-gradient(135deg, #162035, #1a2d45); border: 1px solid #2a4060; border-radius: 8px 8px 0 0; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .service-header:hover { background: linear-gradient(135deg, #1a2840, #1e3450); }
+  .service-name { font-size: 15px; font-weight: 700; color: #f0a500; }
+  .service-stats { display: flex; gap: 18px; font-size: 11px; color: #7a90a8; }
+  .service-stats span strong { color: #d0d8e4; }
+  .service-stats .badge { background: #0d4d1a; color: #00e676; border-radius: 3px; padding: 1px 6px; font-weight: 700; font-size: 10px; }
+  .service-stats .badge.warn { background: #4d3000; color: #ffd54f; }
+  .service-stats .badge.danger { background: #4d1000; color: #ff6e40; }
+  .collapse-icon { color: #5a7090; font-size: 14px; transition: transform 0.2s; }
+  .service-section.collapsed .collapse-icon { transform: rotate(-90deg); }
+  .table-wrap { overflow-x: auto; border: 1px solid #1e3050; border-top: none; border-radius: 0 0 8px 8px; }
+  .service-section.collapsed .table-wrap { display: none; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #0d1d30; }
+  thead th { padding: 9px 10px; text-align: left; font-size: 10px; font-weight: 700; color: #5a7090; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; border-bottom: 1px solid #1e3050; }
+  thead th.sortable { cursor: pointer; user-select: none; }
+  thead th.sortable:hover { color: #f0a500; }
+  tbody tr { border-bottom: 1px solid #141f2e; transition: background 0.1s; }
+  tbody tr:hover { background: #162030; }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: 8px 10px; vertical-align: middle; }
+  .kw-cell { font-weight: 500; color: #c8d6e8; max-width: 260px; }
+  .vol-cell { font-weight: 600; text-align: right; }
+  .diff-cell { text-align: center; font-weight: 700; border-radius: 4px; padding: 3px 7px; display: inline-block; min-width: 32px; font-size: 12px; }
+  .diff-low { background: #0a3318; color: #00e676; }
+  .diff-med { background: #2e2a00; color: #ffd54f; }
+  .diff-high { background: #3d1800; color: #ff8a65; }
+  .diff-vhigh { background: #3d0a0a; color: #ff5252; }
+  .da-cell, .pa-cell { text-align: center; color: #7a90a8; font-size: 12px; }
+  .wc-cell { text-align: right; color: #7a90a8; font-size: 12px; }
+  .intent-cell { font-size: 11px; }
+  .intent-t { color: #00e676; }
+  .intent-c { color: #ffab40; }
+  .intent-n { color: #64b5f6; }
+  .intent-i { color: #90a4ae; }
+  .score-cell { text-align: center; font-weight: 700; font-size: 13px; border-radius: 4px; padding: 3px 7px; display: inline-block; min-width: 38px; }
+  .score-strong { background: #0a3318; color: #00e676; }
+  .score-moderate { background: #2e2a00; color: #ffd54f; }
+  .score-challenging { background: #3d1800; color: #ff8a65; }
+  .score-difficult { background: #3d0a0a; color: #ff5252; }
+  .bis-cell { text-align: center; font-size: 12px; color: #a0b4c8; }
+  .wss-cell { text-align: center; font-size: 12px; color: #a0b4c8; }
+  .est-note { font-size: 10px; color: #3a5070; }
+  footer { text-align: center; padding: 24px; color: #3a5070; font-size: 11px; border-top: 1px solid #1a2d45; margin-top: 28px; }
+  .legend { display: flex; gap: 20px; margin: 10px 28px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  @media (max-width: 768px) { main { padding: 0 10px 40px; } .controls { padding: 10px 12px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>FAP — Strong Compact Keywords Dashboard</h1>
+    <div style="font-size:11px;color:#5a7090;margin-top:3px;">Financial Advisor Pro · financial-advisorpro.com · 29 Services</div>
+  </div>
+  <div class="meta">
+    Methodology: Edward Sturm Compact Keyword<br>
+    Source: Moz Pro Keyword Explorer<br>
+    Last Updated: June 10, 2026
+  </div>
+</header>
+
+<div class="controls">
+  <label>Filter Service:
+    <select id="filterService">
+      <option value="all">All Services</option>
+    </select>
+  </label>
+  <label>Min Score:
+    <input type="number" id="filterScore" value="0" min="0" max="100" style="width:60px">
+  </label>
+  <label>Max Difficulty:
+    <input type="number" id="filterDiff" value="100" min="0" max="100" style="width:60px">
+  </label>
+  <label>Min Volume:
+    <input type="number" id="filterVol" value="1" min="1" style="width:70px">
+  </label>
+  <button onclick="applyFilters()">Apply</button>
+  <button onclick="resetFilters()" style="background:#1e3050;color:#a0b4c8;">Reset</button>
+  <span style="margin-left:auto;font-size:11px;color:#5a7090;"><span id="visibleCount">—</span> keywords visible</span>
+</div>
+
+<div class="stats-bar" id="globalStats"></div>
+
+<div class="notice">
+  ⚡ <strong>Edward Sturm Compact Keyword Method:</strong> Low difficulty + high buyer intent = bottom-of-funnel searcher ready to hire.
+  Score = (Buyer Intent Score + Weak SERP Score) / 2. Target ≥ 70.
+  &nbsp;|&nbsp; <strong>DA/PA/WC columns marked (Est.)</strong> are estimated from Moz difficulty — actual SERP analysis pending for full verification.
+  &nbsp;|&nbsp; Location priority: Near Me → Mesa AZ → Arizona → National.
+</div>
+
+<div class="legend">
+  <span style="font-size:11px;color:#5a7090;font-weight:700;">Compact Score:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#00e676;"></div>≥70 Strong</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffd54f;"></div>55–69 Moderate</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff8a65;"></div>40–54 Challenging</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff5252;"></div>&lt;40 Difficult</div>
+  <span style="margin-left:16px;font-size:11px;color:#5a7090;font-weight:700;">Difficulty:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#00e676;"></div>≤25 Low</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffd54f;"></div>26–35 Medium</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff8a65;"></div>36–47 High</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff5252;"></div>&gt;47 Very High</div>
+</div>
+
+<main id="mainContent"></main>
+
+<footer>
+  Financial Advisor Pro · FAP-STRONG-Compact-Keywords.html · Data sourced from Moz Pro Keyword Explorer · Built June 10, 2026<br>
+  Edward Sturm Compact Keyword methodology: Buyer Intent × Weak SERP = Compact Keyword Score
+</footer>
+
+<script>
+const SERVICES_ORDER = [
+  "Wealth Management","Retirement Planning","Traditional IRA","Roth IRA",
+  "401k Rollover into an IRA","Mutual Funds","Variable Annuity","Index Linked Variable Annuity",
+  "Fixed Index Annuity","Term Life Insurance","401k Plans","SEP IRA","Simple IRA","Solo 401k",
+  "UGMA/UTMA","529 Plans","Auto Insurance","Home Insurance","Pre-paid Legal Services",
+  "ID Theft Defense","Home Loans","Refinance","Mortgages","HELOC","Home Equity Loan",
+  "College Savings","Estate Planning","Buy-Sell Life Insurance Policies","Key-man Life Insurance Policies"
+];
+
+const RAW = [
+  // 1. WEALTH MANAGEMENT
+  {s:"Wealth Management",k:"fiduciary financial advisor near me",v:1842,d:16,i:"transactional"},
+  {s:"Wealth Management",k:"financial advisor near me",v:29189,d:33,i:"transactional"},
+  {s:"Wealth Management",k:"investment advisor near me",v:704,d:35,i:"transactional"},
+  {s:"Wealth Management",k:"wealth management firms near me",v:468,d:28,i:"navigational"},
+  {s:"Wealth Management",k:"fee only advisor near me",v:125,d:35,i:"transactional"},
+  {s:"Wealth Management",k:"fee only wealth management",v:116,d:35,i:"informational"},
+  {s:"Wealth Management",k:"financial advisor arizona",v:54,d:20,i:"transactional"},
+  {s:"Wealth Management",k:"fiduciary wealth management",v:24,d:22,i:"informational"},
+  {s:"Wealth Management",k:"financial advisor mesa az",v:25,d:28,i:"navigational"},
+  {s:"Wealth Management",k:"independent investment advisor near me",v:10,d:18,i:"transactional"},
+  // 2. RETIREMENT PLANNING
+  {s:"Retirement Planning",k:"retirement planning advisor near me",v:67,d:30,i:"transactional"},
+  {s:"Retirement Planning",k:"retirement financial advisor near me",v:55,d:27,i:"transactional"},
+  {s:"Retirement Planning",k:"best retirement planner near me",v:35,d:28,i:"transactional"},
+  {s:"Retirement Planning",k:"retirement planning near me",v:122,d:39,i:"transactional"},
+  {s:"Retirement Planning",k:"financial advisor for retirement near me",v:11,d:29,i:"transactional"},
+  {s:"Retirement Planning",k:"retirement cash flow planning",v:14,d:26,i:"informational"},
+  {s:"Retirement Planning",k:"retirement planner arizona",v:8,d:22,i:"transactional"},
+  {s:"Retirement Planning",k:"retirement planning consultation",v:2,d:35,i:"transactional"},
+  // 3. TRADITIONAL IRA
+  {s:"Traditional IRA",k:"ira rollover advisor",v:7,d:35,i:"informational"},
+  {s:"Traditional IRA",k:"traditional ira rollover",v:481,d:47,i:"informational"},
+  {s:"Traditional IRA",k:"rollover ira to roth ira",v:813,d:44,i:"informational"},
+  {s:"Traditional IRA",k:"traditional ira near me",v:1,d:41,i:"transactional"},
+  {s:"Traditional IRA",k:"ira rollover near me",v:1,d:37,i:"transactional"},
+  {s:"Traditional IRA",k:"rollover ira advisor",v:8,d:37,i:"informational"},
+  {s:"Traditional IRA",k:"financial advisor for retirement near me",v:11,d:29,i:"transactional"},
+  // 4. ROTH IRA
+  {s:"Roth IRA",k:"roth conversion near me",v:1,d:33,i:"informational"},
+  {s:"Roth IRA",k:"roth ira for young adults",v:92,d:37,i:"commercial"},
+  {s:"Roth IRA",k:"roth ira advisor",v:82,d:43,i:"transactional"},
+  {s:"Roth IRA",k:"rollover ira to roth ira",v:813,d:44,i:"informational"},
+  {s:"Roth IRA",k:"roth ira near me",v:64,d:40,i:"transactional"},
+  {s:"Roth IRA",k:"ira rollover near me",v:1,d:37,i:"transactional"},
+  {s:"Roth IRA",k:"rollover ira advisor",v:8,d:37,i:"informational"},
+  // 5. 401K ROLLOVER INTO AN IRA
+  {s:"401k Rollover into an IRA",k:"401k rollover near me",v:9,d:38,i:"informational"},
+  {s:"401k Rollover into an IRA",k:"401k advisor near me",v:27,d:39,i:"transactional"},
+  {s:"401k Rollover into an IRA",k:"401k rollover to ira",v:4960,d:47,i:"informational"},
+  {s:"401k Rollover into an IRA",k:"transfer 401k to ira",v:752,d:50,i:"informational"},
+  {s:"401k Rollover into an IRA",k:"401k to ira rollover",v:371,d:50,i:"informational"},
+  {s:"401k Rollover into an IRA",k:"ira rollover near me",v:1,d:37,i:"transactional"},
+  {s:"401k Rollover into an IRA",k:"rollover ira advisor",v:8,d:37,i:"informational"},
+  // 6. MUTUAL FUNDS
+  {s:"Mutual Funds",k:"investment advisor near me",v:704,d:35,i:"transactional"},
+  {s:"Mutual Funds",k:"mutual fund advisor near me",v:1,d:41,i:"transactional"},
+  {s:"Mutual Funds",k:"mutual fund near me",v:11,d:48,i:"transactional"},
+  {s:"Mutual Funds",k:"mutual fund advisor",v:62,d:44,i:"commercial"},
+  {s:"Mutual Funds",k:"money manager near me",v:64,d:44,i:"transactional"},
+  {s:"Mutual Funds",k:"registered investment advisor near me",v:284,d:47,i:"transactional"},
+  {s:"Mutual Funds",k:"financial planning near me",v:881,d:47,i:"transactional"},
+  // 7. VARIABLE ANNUITY
+  {s:"Variable Annuity",k:"fixed annuity vs variable annuity",v:421,d:27,i:"informational"},
+  {s:"Variable Annuity",k:"index annuity vs variable annuity",v:16,d:27,i:"transactional"},
+  {s:"Variable Annuity",k:"tax deferred annuity",v:1104,d:32,i:"informational"},
+  {s:"Variable Annuity",k:"lifetime income annuity",v:308,d:42,i:"informational"},
+  {s:"Variable Annuity",k:"retirement income annuity",v:55,d:47,i:"informational"},
+  {s:"Variable Annuity",k:"annuity advisor near me",v:5,d:39,i:"transactional"},
+  // 8. INDEX LINKED VARIABLE ANNUITY
+  {s:"Index Linked Variable Annuity",k:"index annuity vs variable annuity",v:16,d:27,i:"transactional"},
+  {s:"Index Linked Variable Annuity",k:"rila annuity",v:17,d:30,i:"transactional"},
+  {s:"Index Linked Variable Annuity",k:"fixed index annuity pros and cons",v:485,d:32,i:"transactional"},
+  {s:"Index Linked Variable Annuity",k:"registered index linked annuity",v:209,d:34,i:"transactional"},
+  {s:"Index Linked Variable Annuity",k:"fixed index annuity rates",v:595,d:36,i:"transactional"},
+  {s:"Index Linked Variable Annuity",k:"fixed index annuity near me",v:19,d:41,i:"transactional"},
+  {s:"Index Linked Variable Annuity",k:"annuity advisor near me",v:5,d:39,i:"transactional"},
+  // 9. FIXED INDEX ANNUITY
+  {s:"Fixed Index Annuity",k:"principal protected annuity",v:16,d:26,i:"transactional"},
+  {s:"Fixed Index Annuity",k:"tax deferred annuity",v:1104,d:32,i:"informational"},
+  {s:"Fixed Index Annuity",k:"fixed index annuity pros and cons",v:485,d:32,i:"transactional"},
+  {s:"Fixed Index Annuity",k:"fixed index annuity rates",v:595,d:36,i:"transactional"},
+  {s:"Fixed Index Annuity",k:"best fixed index annuity",v:184,d:36,i:"transactional"},
+  {s:"Fixed Index Annuity",k:"fixed index annuity near me",v:19,d:41,i:"transactional"},
+  {s:"Fixed Index Annuity",k:"annuity advisor near me",v:5,d:39,i:"transactional"},
+  // 10. TERM LIFE INSURANCE
+  {s:"Term Life Insurance",k:"life insurance broker near me",v:508,d:20,i:"transactional"},
+  {s:"Term Life Insurance",k:"life insurance mesa az",v:4,d:26,i:"transactional"},
+  {s:"Term Life Insurance",k:"buy sell life insurance",v:43,d:25,i:"transactional"},
+  {s:"Term Life Insurance",k:"buy sell agreement life insurance",v:132,d:29,i:"transactional"},
+  {s:"Term Life Insurance",k:"term life insurance for seniors",v:1131,d:35,i:"informational"},
+  {s:"Term Life Insurance",k:"term life insurance agent near me",v:27,d:45,i:"transactional"},
+  {s:"Term Life Insurance",k:"term life insurance near me",v:39,d:47,i:"transactional"},
+  // 11. 401K PLANS
+  {s:"401k Plans",k:"401k plan advisor",v:1,d:27,i:"informational"},
+  {s:"401k Plans",k:"401k rollover near me",v:9,d:38,i:"informational"},
+  {s:"401k Plans",k:"small business 401k advisor",v:5,d:38,i:"commercial"},
+  {s:"401k Plans",k:"401k advisor near me",v:27,d:39,i:"transactional"},
+  {s:"401k Plans",k:"small business 401k plans",v:132,d:47,i:"informational"},
+  {s:"401k Plans",k:"solo 401k contribution limits",v:3018,d:46,i:"informational"},
+  {s:"401k Plans",k:"retirement plan for self employed",v:334,d:44,i:"transactional"},
+  // 12. SEP IRA
+  {s:"SEP IRA",k:"self employed retirement account",v:102,d:42,i:"informational"},
+  {s:"SEP IRA",k:"sep ira for self employed",v:849,d:47,i:"transactional"},
+  {s:"SEP IRA",k:"sep ira near me",v:23,d:50,i:"transactional"},
+  {s:"SEP IRA",k:"sep ira self employed",v:240,d:49,i:"informational"},
+  {s:"SEP IRA",k:"retirement plan for self employed",v:334,d:44,i:"transactional"},
+  {s:"SEP IRA",k:"sep ira contribution",v:1294,d:51,i:"informational"},
+  {s:"SEP IRA",k:"financial planning near me",v:881,d:47,i:"transactional"},
+  // 13. SIMPLE IRA
+  {s:"Simple IRA",k:"simple ira self employed",v:87,d:44,i:"informational"},
+  {s:"Simple IRA",k:"simple ira vs 401k",v:1200,d:42,i:"informational"},
+  {s:"Simple IRA",k:"simple ira rollover",v:82,d:47,i:"informational"},
+  {s:"Simple IRA",k:"simple ira vs sep ira",v:1646,d:39,i:"informational"},
+  {s:"Simple IRA",k:"simple ira contribution",v:350,d:43,i:"informational"},
+  {s:"Simple IRA",k:"retirement plan for self employed",v:334,d:44,i:"transactional"},
+  {s:"Simple IRA",k:"simple ira for small business",v:47,d:50,i:"informational"},
+  // 14. SOLO 401K
+  {s:"Solo 401k",k:"self employed retirement account",v:102,d:42,i:"informational"},
+  {s:"Solo 401k",k:"one participant 401k",v:18,d:53,i:"informational"},
+  {s:"Solo 401k",k:"solo 401k for self employed",v:27,d:55,i:"informational"},
+  {s:"Solo 401k",k:"solo 401k rollover",v:16,d:29,i:"transactional"},
+  {s:"Solo 401k",k:"solo 401k contribution limits",v:3018,d:46,i:"informational"},
+  {s:"Solo 401k",k:"retirement plan for self employed",v:334,d:44,i:"transactional"},
+  {s:"Solo 401k",k:"financial advisor for retirement near me",v:11,d:29,i:"transactional"},
+  // 15. UGMA/UTMA
+  {s:"UGMA/UTMA",k:"utma account",v:6312,d:42,i:"transactional"},
+  {s:"UGMA/UTMA",k:"ugma account",v:3461,d:44,i:"informational"},
+  {s:"UGMA/UTMA",k:"minor brokerage account",v:73,d:48,i:"informational"},
+  {s:"UGMA/UTMA",k:"child savings account near me",v:37,d:32,i:"transactional"},
+  // 16. 529 PLANS
+  {s:"529 Plans",k:"college financial planning near me",v:1,d:29,i:"transactional"},
+  {s:"529 Plans",k:"529 college savings",v:625,d:47,i:"transactional"},
+  {s:"529 Plans",k:"coverdell education savings",v:432,d:48,i:"informational"},
+  {s:"529 Plans",k:"529 plan advisor near me",v:12,d:29,i:"transactional"},
+  {s:"529 Plans",k:"college savings advisor near me",v:6,d:32,i:"transactional"},
+  {s:"529 Plans",k:"education savings account near me",v:1,d:42,i:"transactional"},
+  {s:"529 Plans",k:"college savings account near me",v:4,d:47,i:"transactional"},
+  // 17. AUTO INSURANCE
+  {s:"Auto Insurance",k:"auto insurance mesa az",v:27,d:26,i:"transactional"},
+  {s:"Auto Insurance",k:"car insurance mesa az",v:31,d:26,i:"transactional"},
+  {s:"Auto Insurance",k:"homeowners insurance mesa az",v:11,d:28,i:"transactional"},
+  {s:"Auto Insurance",k:"auto insurance quotes mesa az",v:14,d:28,i:"transactional"},
+  {s:"Auto Insurance",k:"auto insurance arizona",v:395,d:36,i:"informational"},
+  {s:"Auto Insurance",k:"auto insurance agent near me",v:111,d:41,i:"transactional"},
+  {s:"Auto Insurance",k:"car insurance agent near me",v:153,d:47,i:"transactional"},
+  // 18. HOME INSURANCE
+  {s:"Home Insurance",k:"homeowners insurance mesa az",v:11,d:28,i:"transactional"},
+  {s:"Home Insurance",k:"home insurance mesa az",v:7,d:31,i:"transactional"},
+  {s:"Home Insurance",k:"home insurance arizona",v:111,d:39,i:"transactional"},
+  {s:"Home Insurance",k:"homeowners insurance arizona",v:23,d:40,i:"transactional"},
+  {s:"Home Insurance",k:"homeowners insurance agent near me",v:27,d:30,i:"transactional"},
+  {s:"Home Insurance",k:"home insurance agent near me",v:31,d:42,i:"transactional"},
+  {s:"Home Insurance",k:"home insurance broker near me",v:1000,d:47,i:"transactional"},
+  // 19. PRE-PAID LEGAL SERVICES
+  {s:"Pre-paid Legal Services",k:"legal shield mesa az",v:1,d:34,i:"transactional"},
+  {s:"Pre-paid Legal Services",k:"legal protection near me",v:16,d:31,i:"transactional"},
+  {s:"Pre-paid Legal Services",k:"legalshield advisor near me",v:30,d:35,i:"transactional"},
+  {s:"Pre-paid Legal Services",k:"prepaid legal near me",v:5,d:40,i:"transactional"},
+  {s:"Pre-paid Legal Services",k:"legal services plan",v:146,d:42,i:"transactional"},
+  {s:"Pre-paid Legal Services",k:"prepaid legal services near me",v:35,d:44,i:"transactional"},
+  // 20. ID THEFT DEFENSE
+  {s:"ID Theft Defense",k:"identity theft insurance",v:1909,d:45,i:"informational"},
+  {s:"ID Theft Defense",k:"identity theft protection plan",v:27,d:49,i:"navigational"},
+  {s:"ID Theft Defense",k:"id theft protection service",v:24,d:59,i:"informational"},
+  {s:"ID Theft Defense",k:"identity protection near me",v:27,d:47,i:"transactional"},
+  // 21. HOME LOANS
+  {s:"Home Loans",k:"home loan mesa az",v:9,d:24,i:"transactional"},
+  {s:"Home Loans",k:"mortgage company near me",v:3065,d:24,i:"transactional"},
+  {s:"Home Loans",k:"mortgage broker near me",v:8087,d:25,i:"transactional"},
+  {s:"Home Loans",k:"home refinance mesa az",v:104,d:25,i:"transactional"},
+  {s:"Home Loans",k:"mortgage lender near me",v:445,d:31,i:"transactional"},
+  {s:"Home Loans",k:"mortgage advisor near me",v:105,d:31,i:"transactional"},
+  {s:"Home Loans",k:"mortgage broker mesa az",v:1,d:29,i:"transactional"},
+  // 22. REFINANCE
+  {s:"Refinance",k:"home refinance mesa az",v:104,d:25,i:"transactional"},
+  {s:"Refinance",k:"mortgage broker near me",v:8087,d:25,i:"transactional"},
+  {s:"Refinance",k:"mortgage refinance mesa az",v:7,d:27,i:"transactional"},
+  {s:"Refinance",k:"mortgage advisor near me",v:105,d:31,i:"transactional"},
+  {s:"Refinance",k:"refinance loan near me",v:20,d:33,i:"transactional"},
+  {s:"Refinance",k:"refinance near me",v:24,d:36,i:"transactional"},
+  {s:"Refinance",k:"cash out refinance near me",v:27,d:47,i:"transactional"},
+  // 23. MORTGAGES
+  {s:"Mortgages",k:"home loan mesa az",v:9,d:24,i:"transactional"},
+  {s:"Mortgages",k:"mortgage company near me",v:3065,d:24,i:"transactional"},
+  {s:"Mortgages",k:"mortgage broker near me",v:8087,d:25,i:"transactional"},
+  {s:"Mortgages",k:"mortgage broker mesa az",v:1,d:29,i:"transactional"},
+  {s:"Mortgages",k:"mortgage lender near me",v:445,d:31,i:"transactional"},
+  {s:"Mortgages",k:"mortgage advisor near me",v:105,d:31,i:"transactional"},
+  {s:"Mortgages",k:"conventional loan near me",v:6,d:37,i:"transactional"},
+  // 24. HELOC
+  {s:"HELOC",k:"heloc arizona",v:24,d:20,i:"transactional"},
+  {s:"HELOC",k:"heloc rates arizona",v:11,d:27,i:"transactional"},
+  {s:"HELOC",k:"home equity line of credit arizona",v:24,d:22,i:"transactional"},
+  {s:"HELOC",k:"home equity line of credit near me",v:31,d:34,i:"transactional"},
+  {s:"HELOC",k:"home equity loan rates near me",v:432,d:39,i:"transactional"},
+  {s:"HELOC",k:"heloc near me",v:249,d:47,i:"transactional"},
+  {s:"HELOC",k:"heloc lender near me",v:5,d:39,i:"transactional"},
+  // 25. HOME EQUITY LOAN
+  {s:"Home Equity Loan",k:"home equity loan near me",v:11,d:16,i:"transactional"},
+  {s:"Home Equity Loan",k:"home equity loan arizona",v:6,d:22,i:"transactional"},
+  {s:"Home Equity Loan",k:"home equity line of credit arizona",v:24,d:22,i:"transactional"},
+  {s:"Home Equity Loan",k:"equity loan near me",v:3,d:33,i:"transactional"},
+  {s:"Home Equity Loan",k:"second mortgage near me",v:1,d:34,i:"transactional"},
+  {s:"Home Equity Loan",k:"home equity loan rates near me",v:432,d:39,i:"transactional"},
+  // 26. COLLEGE SAVINGS
+  {s:"College Savings",k:"college financial planning near me",v:1,d:29,i:"transactional"},
+  {s:"College Savings",k:"529 college savings",v:625,d:47,i:"transactional"},
+  {s:"College Savings",k:"coverdell education savings",v:432,d:48,i:"informational"},
+  {s:"College Savings",k:"529 plan advisor near me",v:12,d:29,i:"transactional"},
+  {s:"College Savings",k:"college savings advisor near me",v:6,d:32,i:"transactional"},
+  {s:"College Savings",k:"education savings account near me",v:1,d:42,i:"transactional"},
+  {s:"College Savings",k:"college savings account near me",v:4,d:47,i:"transactional"},
+  // 27. ESTATE PLANNING
+  {s:"Estate Planning",k:"probate attorney near me",v:1622,d:14,i:"transactional"},
+  {s:"Estate Planning",k:"estate planning attorney near me",v:3335,d:23,i:"transactional"},
+  {s:"Estate Planning",k:"estate attorney near me",v:8763,d:24,i:"informational"},
+  {s:"Estate Planning",k:"estate planning lawyer near me",v:521,d:23,i:"transactional"},
+  {s:"Estate Planning",k:"estate planning near me",v:432,d:27,i:"transactional"},
+  {s:"Estate Planning",k:"living trust near me",v:39,d:27,i:"transactional"},
+  {s:"Estate Planning",k:"estate planning attorney mesa az",v:82,d:30,i:"transactional"},
+  {s:"Estate Planning",k:"trust attorney near me",v:1273,d:31,i:"transactional"},
+  {s:"Estate Planning",k:"estate planning services near me",v:89,d:34,i:"transactional"},
+  {s:"Estate Planning",k:"estate attorney arizona",v:3,d:24,i:"transactional"},
+  // 28. BUY-SELL LIFE INSURANCE POLICIES
+  {s:"Buy-Sell Life Insurance Policies",k:"buy sell life insurance",v:43,d:25,i:"transactional"},
+  {s:"Buy-Sell Life Insurance Policies",k:"buy sell life insurance policy",v:8,d:25,i:"transactional"},
+  {s:"Buy-Sell Life Insurance Policies",k:"buy sell agreement life insurance",v:132,d:29,i:"transactional"},
+  {s:"Buy-Sell Life Insurance Policies",k:"business owner life insurance",v:24,d:36,i:"informational"},
+  {s:"Buy-Sell Life Insurance Policies",k:"business continuation insurance",v:18,d:42,i:"informational"},
+  {s:"Buy-Sell Life Insurance Policies",k:"executive life insurance",v:39,d:40,i:"transactional"},
+  {s:"Buy-Sell Life Insurance Policies",k:"life insurance broker near me",v:508,d:20,i:"transactional"},
+  // 29. KEY-MAN LIFE INSURANCE POLICIES
+  {s:"Key-man Life Insurance Policies",k:"life insurance broker near me",v:508,d:20,i:"transactional"},
+  {s:"Key-man Life Insurance Policies",k:"keyman insurance",v:483,d:40,i:"informational"},
+  {s:"Key-man Life Insurance Policies",k:"key employee insurance",v:111,d:40,i:"informational"},
+  {s:"Key-man Life Insurance Policies",k:"key person life insurance",v:163,d:41,i:"informational"},
+  {s:"Key-man Life Insurance Policies",k:"key employee life insurance",v:206,d:42,i:"informational"},
+  {s:"Key-man Life Insurance Policies",k:"key man life insurance",v:771,d:44,i:"informational"},
+  {s:"Key-man Life Insurance Policies",k:"executive life insurance",v:39,d:40,i:"transactional"},
+];
+
+function getDA(d){
+  if(d<=15)return 28; if(d<=20)return 33; if(d<=25)return 38; if(d<=30)return 43;
+  if(d<=35)return 48; if(d<=40)return 53; if(d<=47)return 58; if(d<=55)return 65; return 72;
+}
+function getPA(d){
+  if(d<=15)return 22; if(d<=20)return 27; if(d<=25)return 32; if(d<=30)return 37;
+  if(d<=35)return 42; if(d<=40)return 47; if(d<=47)return 52; if(d<=55)return 58; return 65;
+}
+function getWC(k,i){
+  if(k.includes('near me')||k.includes('mesa az')||k.includes('arizona'))return 1200;
+  if(k.includes(' vs ')||k.includes('pros and cons'))return 2800;
+  if(i==='informational')return 2400;
+  return 1800;
+}
+function getBIS(i){
+  if(i==='transactional')return 92;
+  if(i==='commercial')return 82;
+  if(i==='navigational')return 65;
+  if(i==='informational')return 45;
+  return 50;
+}
+function getWSS(d){
+  if(d<=15)return 95; if(d<=20)return 88; if(d<=25)return 82; if(d<=30)return 75;
+  if(d<=35)return 68; if(d<=40)return 58; if(d<=47)return 48; if(d<=55)return 35; return 22;
+}
+function getCKS(bis,wss){ return Math.round((bis+wss)/2); }
+function diffClass(d){
+  if(d<=25)return 'diff-low'; if(d<=35)return 'diff-med'; if(d<=47)return 'diff-high'; return 'diff-vhigh';
+}
+function scoreClass(s){
+  if(s>=70)return 'score-strong'; if(s>=55)return 'score-moderate'; if(s>=40)return 'score-challenging'; return 'score-difficult';
+}
+function intentHTML(i){
+  const c=i==='transactional'?'intent-t':i==='commercial'?'intent-c':i==='navigational'?'intent-n':'intent-i';
+  return `<span class="${c}">${i}</span>`;
+}
+function fmtVol(v){
+  if(v>=10000)return (v/1000).toFixed(1)+'k';
+  if(v>=1000)return (v/1000).toFixed(1)+'k';
+  return v.toLocaleString();
+}
+
+// Enrich data
+const DATA = RAW.map(r=>({
+  ...r,
+  da: getDA(r.d), pa: getPA(r.d), wc: getWC(r.k,r.i),
+  bis: getBIS(r.i), wss: getWSS(r.d), cks: getCKS(getBIS(r.i),getWSS(r.d))
+}));
+
+let filtered = [...DATA];
+
+function getServiceSummary(rows){
+  const total = rows.length;
+  const strong = rows.filter(r=>r.cks>=70).length;
+  const avgDiff = Math.round(rows.reduce((a,r)=>a+r.d,0)/total);
+  const avgBIS = Math.round(rows.reduce((a,r)=>a+r.bis,0)/total);
+  const avgWSS = Math.round(rows.reduce((a,r)=>a+r.wss,0)/total);
+  const avgCKS = Math.round(rows.reduce((a,r)=>a+r.cks,0)/total);
+  return {total,strong,avgDiff,avgBIS,avgWSS,avgCKS};
+}
+
+function buildGlobalStats(){
+  const total = filtered.length;
+  const strong = filtered.filter(r=>r.cks>=70).length;
+  const servicesWithData = new Set(filtered.map(r=>r.s)).size;
+  const avgCKS = total ? Math.round(filtered.reduce((a,r)=>a+r.cks,0)/total) : 0;
+  const services7plus = SERVICES_ORDER.filter(svc=>{
+    const rows = filtered.filter(r=>r.s===svc);
+    return rows.length>=7;
+  }).length;
+  document.getElementById('globalStats').innerHTML = `
+    <div class="stat-item"><span class="val">${total}</span><span class="lbl">Total Keywords</span></div>
+    <div class="stat-item"><span class="val">${strong}</span><span class="lbl">Strong (CKS ≥70)</span></div>
+    <div class="stat-item"><span class="val">${servicesWithData}/29</span><span class="lbl">Services w/ Data</span></div>
+    <div class="stat-item"><span class="val">${services7plus}/29</span><span class="lbl">Services ≥7 KWs</span></div>
+    <div class="stat-item"><span class="val">${avgCKS}</span><span class="lbl">Avg CK Score</span></div>
+  `;
+  document.getElementById('visibleCount').textContent = total;
+}
+
+function renderAll(){
+  const main = document.getElementById('mainContent');
+  main.innerHTML = '';
+  SERVICES_ORDER.forEach((svc,idx)=>{
+    const rows = filtered.filter(r=>r.s===svc);
+    if(rows.length===0) return;
+    const sm = getServiceSummary(rows);
+    const badgeClass = sm.strong>=7?'badge':sm.strong>=4?'badge warn':'badge danger';
+    const badgeText = sm.strong>=7?`✓ ${sm.strong} Strong`:`⚠ ${sm.strong} Strong`;
+    const section = document.createElement('div');
+    section.className='service-section';
+    section.id=`svc-${idx}`;
+    section.innerHTML=`
+      <div class="service-header" onclick="toggleSection(this)">
+        <span class="service-name">${svc}</span>
+        <div class="service-stats">
+          <span><strong>${rows.length}</strong> keywords</span>
+          <span>Avg Diff: <strong>${sm.avgDiff}</strong></span>
+          <span>Avg BIS: <strong>${sm.avgBIS}</strong></span>
+          <span>Avg WSS: <strong>${sm.avgWSS}</strong></span>
+          <span>Avg CKS: <strong>${sm.avgCKS}</strong></span>
+          <span class="${badgeClass}">${badgeText}</span>
+        </div>
+        <span class="collapse-icon">▾</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th style="text-align:right">Monthly Searches</th>
+              <th style="text-align:center">Difficulty</th>
+              <th style="text-align:center">Avg DA <span class="est-note">(Est.)</span></th>
+              <th style="text-align:center">Avg PA <span class="est-note">(Est.)</span></th>
+              <th style="text-align:right">Avg WC <span class="est-note">(Est.)</span></th>
+              <th>Search Intent</th>
+              <th style="text-align:center">Buyer Intent</th>
+              <th style="text-align:center">Weak SERP</th>
+              <th style="text-align:center">CK Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.sort((a,b)=>b.cks-a.cks).map(r=>`
+            <tr>
+              <td class="kw-cell">${r.k}</td>
+              <td class="vol-cell">${fmtVol(r.v)}</td>
+              <td style="text-align:center"><span class="diff-cell ${diffClass(r.d)}">${r.d}</span></td>
+              <td class="da-cell">${r.da}</td>
+              <td class="pa-cell">${r.pa}</td>
+              <td class="wc-cell">${r.wc.toLocaleString()}</td>
+              <td class="intent-cell">${intentHTML(r.i)}</td>
+              <td class="bis-cell">${r.bis}</td>
+              <td class="wss-cell">${r.wss}</td>
+              <td style="text-align:center"><span class="score-cell ${scoreClass(r.cks)}">${r.cks}</span></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    main.appendChild(section);
+  });
+}
+
+function toggleSection(header){
+  const section = header.closest('.service-section');
+  section.classList.toggle('collapsed');
+}
+
+function applyFilters(){
+  const svc = document.getElementById('filterService').value;
+  const minScore = parseInt(document.getElementById('filterScore').value)||0;
+  const maxDiff = parseInt(document.getElementById('filterDiff').value)||100;
+  const minVol = parseInt(document.getElementById('filterVol').value)||1;
+  filtered = DATA.filter(r=>
+    (svc==='all'||r.s===svc) &&
+    r.cks>=minScore &&
+    r.d<=maxDiff &&
+    r.v>=minVol
+  );
+  buildGlobalStats();
+  renderAll();
+}
+
+function resetFilters(){
+  document.getElementById('filterService').value='all';
+  document.getElementById('filterScore').value='0';
+  document.getElementById('filterDiff').value='100';
+  document.getElementById('filterVol').value='1';
+  filtered=[...DATA];
+  buildGlobalStats();
+  renderAll();
+}
+
+// Init service filter dropdown
+const sel=document.getElementById('filterService');
+SERVICES_ORDER.forEach(s=>{
+  const o=document.createElement('option');
+  o.value=s; o.textContent=s;
+  sel.appendChild(o);
+});
+
+buildGlobalStats();
+renderAll();
+</script>
+</body>
+</html>
