@@ -1,3 +1,17 @@
+# GSC Weekly Report Log
+*Goal: 333,400 impressions/week · 5,000 clicks/week*
+
+## Week of Jun 12 – Jun 19, 2026
+- **Impressions:** 0 / 333,400 goal (0.0%)
+- **Clicks:** 0 / 5,000 goal (0.0%)
+- **Still needed:** +333,400 impressions · +5,000 clicks
+- **Top domain:** moonfamilyenterprise.com (0 impressions)
+
+| Domain | Impressions | Clicks |
+|--------|-------------|--------|
+
+
+---
 
 ## Week of Jun 5 – Jun 12, 2026
 - **Impressions:** 0 / 333,400 goal (0.0%)
