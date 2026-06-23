@@ -1,5 +1,3 @@
-# GSC Weekly Report Log
-*Goal: 333,400 impressions/week · 5,000 clicks/week*
 
 ## Week of Jun 14 – Jun 20, 2026
 - **Impressions:** 19,829 / 333,400 goal (5.9%)

@@ -37,6 +37,9 @@
   table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   thead th { background: #161b27; color: #64748b; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; padding: 12px 16px; text-align: left; }
   thead th.num { text-align: right; }
+  thead th.sortable { cursor: pointer; user-select: none; transition: color 0.15s; }
+  thead th.sortable:hover { color: #94a3b8; }
+  thead th.sortable .arrow { color: #60a5fa; font-size: 10px; }
   tbody tr { border-top: 1px solid #1e2330; }
   tbody tr:hover { background: #1a2035; }
   td { padding: 12px 16px; vertical-align: middle; }
@@ -70,7 +73,7 @@
     <h1>Weekly GSC Report</h1>
     <p>WM Command Center · Jun 14 – Jun 20, 2026 · All domains</p>
   </div>
-  <div class="header-right"><strong>Generated</strong><br>Monday, June 22, 2026 at 5:36 PM</div>
+  <div class="header-right"><strong>Generated</strong><br>Monday, June 22, 2026 at 8:35 PM</div>
 </div>
 
 <div class="goal-cards">
@@ -83,7 +86,7 @@
     <div class="pct">5.9% of weekly goal</div>
     <div class="bar-track"><div class="bar-fill" style="width:5.9%"></div></div>
     <div class="needed">Need <span>+313,571</span> more to hit goal</div>
-    <div><span class="delta delta-up">▲ 38.7% <span class="delta-abs">(+5,537)</span></span> <span class="delta-abs">vs May 29 – Jun 5, 2026</span></div>
+    <div><span class="delta delta-up">▲ 5.4% <span class="delta-abs">(+1,020)</span></span> <span class="delta-abs">vs May 29 – Jun 5, 2026</span></div>
   </div>
   <div class="goal-card clicks">
     <div class="label">Clicks</div>
@@ -94,7 +97,7 @@
     <div class="pct">0.9% of weekly goal</div>
     <div class="bar-track"><div class="bar-fill" style="width:0.9%"></div></div>
     <div class="needed">Need <span>+4,957</span> more to hit goal</div>
-    <div><span class="delta delta-down">▼ 12.2% <span class="delta-abs">(-6)</span></span> <span class="delta-abs">vs May 29 – Jun 5, 2026</span></div>
+    <div><span class="delta delta-down">▼ 33.8% <span class="delta-abs">(-22)</span></span> <span class="delta-abs">vs May 29 – Jun 5, 2026</span></div>
   </div>
 </div>
 
@@ -102,10 +105,10 @@
 <div class="chart-card">
   
   <svg viewBox="0 0 760 300" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Week-over-week impressions and clicks">
-    <line x1="56" y1="24" x2="704" y2="24" stroke="#1e2330" stroke-width="1"/><text x="48" y="28" text-anchor="end" fill="#3b82f6" font-size="10">20k</text><text x="712" y="28" text-anchor="start" fill="#4ade80" font-size="10">49</text><line x1="56" y1="81" x2="704" y2="81" stroke="#1e2330" stroke-width="1"/><text x="48" y="85" text-anchor="end" fill="#3b82f6" font-size="10">15k</text><text x="712" y="85" text-anchor="start" fill="#4ade80" font-size="10">37</text><line x1="56" y1="138" x2="704" y2="138" stroke="#1e2330" stroke-width="1"/><text x="48" y="142" text-anchor="end" fill="#3b82f6" font-size="10">10k</text><text x="712" y="142" text-anchor="start" fill="#4ade80" font-size="10">25</text><line x1="56" y1="195" x2="704" y2="195" stroke="#1e2330" stroke-width="1"/><text x="48" y="199" text-anchor="end" fill="#3b82f6" font-size="10">5k</text><text x="712" y="199" text-anchor="start" fill="#4ade80" font-size="10">12</text><line x1="56" y1="252" x2="704" y2="252" stroke="#1e2330" stroke-width="1"/><text x="48" y="256" text-anchor="end" fill="#3b82f6" font-size="10">0</text><text x="712" y="256" text-anchor="start" fill="#4ade80" font-size="10">0</text>
-    <polyline points="56,77.62812042967371 380,87.66614554440466 704,24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linejoin="round"/>
-    <polyline points="56,47.265306122448976 380,24 704,51.918367346938794"  fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linejoin="round"/>
-    <circle cx="56" cy="77.62812042967371" r="3.5" fill="#60a5fa"/><circle cx="380" cy="87.66614554440466" r="3.5" fill="#60a5fa"/><circle cx="704" cy="24" r="3.5" fill="#60a5fa"/><circle cx="56" cy="47.265306122448976" r="3.5" fill="#4ade80"/><circle cx="380" cy="24" r="3.5" fill="#4ade80"/><circle cx="704" cy="51.918367346938794" r="3.5" fill="#4ade80"/><text x="56" y="272" text-anchor="middle" fill="#64748b" font-size="10">Jun 4</text><text x="380" y="272" text-anchor="middle" fill="#64748b" font-size="10">Jun 5</text><text x="704" y="272" text-anchor="middle" fill="#64748b" font-size="10">Jun 20</text>
+    <line x1="56" y1="24" x2="704" y2="24" stroke="#1e2330" stroke-width="1"/><text x="48" y="28" text-anchor="end" fill="#3b82f6" font-size="10">20k</text><text x="712" y="28" text-anchor="start" fill="#4ade80" font-size="10">65</text><line x1="56" y1="81" x2="704" y2="81" stroke="#1e2330" stroke-width="1"/><text x="48" y="85" text-anchor="end" fill="#3b82f6" font-size="10">15k</text><text x="712" y="85" text-anchor="start" fill="#4ade80" font-size="10">49</text><line x1="56" y1="138" x2="704" y2="138" stroke="#1e2330" stroke-width="1"/><text x="48" y="142" text-anchor="end" fill="#3b82f6" font-size="10">10k</text><text x="712" y="142" text-anchor="start" fill="#4ade80" font-size="10">33</text><line x1="56" y1="195" x2="704" y2="195" stroke="#1e2330" stroke-width="1"/><text x="48" y="199" text-anchor="end" fill="#3b82f6" font-size="10">5k</text><text x="712" y="199" text-anchor="start" fill="#4ade80" font-size="10">16</text><line x1="56" y1="252" x2="704" y2="252" stroke="#1e2330" stroke-width="1"/><text x="48" y="256" text-anchor="end" fill="#3b82f6" font-size="10">0</text><text x="712" y="256" text-anchor="start" fill="#4ade80" font-size="10">0</text>
+    <polyline points="56,33.3481264814161 380,35.72827676635231 704,24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linejoin="round"/>
+    <polyline points="56,34.5230769230769 380,24 704,101.16923076923078"  fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="56" cy="33.3481264814161" r="3.5" fill="#60a5fa"/><circle cx="380" cy="35.72827676635231" r="3.5" fill="#60a5fa"/><circle cx="704" cy="24" r="3.5" fill="#60a5fa"/><circle cx="56" cy="34.5230769230769" r="3.5" fill="#4ade80"/><circle cx="380" cy="24" r="3.5" fill="#4ade80"/><circle cx="704" cy="101.16923076923078" r="3.5" fill="#4ade80"/><text x="56" y="272" text-anchor="middle" fill="#64748b" font-size="10">Jun 4</text><text x="380" y="272" text-anchor="middle" fill="#64748b" font-size="10">Jun 5</text><text x="704" y="272" text-anchor="middle" fill="#64748b" font-size="10">Jun 20</text>
     <text x="56" y="14" fill="#3b82f6" font-size="11" font-weight="600">Impressions (left axis)</text>
     <text x="704" y="14" text-anchor="end" fill="#4ade80" font-size="11" font-weight="600">Clicks (right axis)</text>
   </svg>
@@ -117,123 +120,123 @@
     <thead>
       <tr>
         <th>Domain</th>
-        <th class="num">Impressions</th>
-        <th class="num">Clicks</th>
-        <th class="num">CTR</th>
-        <th class="num">% of Total Impr.</th>
+        <th class="num sortable" data-col="1">Impressions<span class="arrow"></span></th>
+        <th class="num sortable" data-col="2">Clicks<span class="arrow"></span></th>
+        <th class="num sortable" data-col="3">CTR<span class="arrow"></span></th>
+        <th class="num sortable" data-col="4">% of Total Impr.<span class="arrow"></span></th>
       </tr>
     </thead>
     <tbody>
       <tr>
           <td><a href="https://financial-advisorpro.com" target="_blank">financial-advisorpro.com</a></td>
-          <td class="num">7,371</td>
-          <td class="num">6</td>
-          <td class="num">0.08%</td>
-          <td class="num">37.2%</td>
+          <td class="num" data-value="7371">7,371</td>
+          <td class="num" data-value="6">6</td>
+          <td class="num" data-value="0.0814000814000814">0.08%</td>
+          <td class="num" data-value="37.17282767663524">37.2%</td>
         </tr><tr>
           <td><a href="https://teamakademy.com" target="_blank">teamakademy.com</a></td>
-          <td class="num">5,387</td>
-          <td class="num">1</td>
-          <td class="num">0.02%</td>
-          <td class="num">27.2%</td>
+          <td class="num" data-value="5387">5,387</td>
+          <td class="num" data-value="1">1</td>
+          <td class="num" data-value="0.018563207722294413">0.02%</td>
+          <td class="num" data-value="27.16728024610419">27.2%</td>
         </tr><tr>
           <td><a href="https://azcorazulconstruction.com" target="_blank">azcorazulconstruction.com</a></td>
-          <td class="num">1,748</td>
-          <td class="num">6</td>
-          <td class="num">0.34%</td>
-          <td class="num">8.8%</td>
+          <td class="num" data-value="1748">1,748</td>
+          <td class="num" data-value="6">6</td>
+          <td class="num" data-value="0.34324942791762014">0.34%</td>
+          <td class="num" data-value="8.815371425689648">8.8%</td>
         </tr><tr>
           <td><a href="https://thewellorderedspace.com" target="_blank">thewellorderedspace.com</a></td>
-          <td class="num">1,374</td>
-          <td class="num">18</td>
-          <td class="num">1.31%</td>
-          <td class="num">6.9%</td>
+          <td class="num" data-value="1374">1,374</td>
+          <td class="num" data-value="18">18</td>
+          <td class="num" data-value="1.3100436681222707">1.31%</td>
+          <td class="num" data-value="6.929245045135913">6.9%</td>
         </tr><tr>
           <td><a href="https://accountant-and-bookkeeping-services.solve-now.com" target="_blank">accountant-and-bookkeeping-services.solve-now.com</a></td>
-          <td class="num">1,331</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">6.7%</td>
+          <td class="num" data-value="1331">1,331</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="6.712390942558878">6.7%</td>
         </tr><tr>
           <td><a href="https://clientsplease.com" target="_blank">clientsplease.com</a></td>
-          <td class="num">1,017</td>
-          <td class="num">1</td>
-          <td class="num">0.10%</td>
-          <td class="num">5.1%</td>
+          <td class="num" data-value="1017">1,017</td>
+          <td class="num" data-value="1">1</td>
+          <td class="num" data-value="0.09832841691248771">0.10%</td>
+          <td class="num" data-value="5.128851681880075">5.1%</td>
         </tr><tr>
           <td><a href="https://waddellenterprises.com" target="_blank">waddellenterprises.com</a></td>
-          <td class="num">584</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">2.9%</td>
+          <td class="num" data-value="584">584</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="2.9451813001159914">2.9%</td>
         </tr><tr>
           <td><a href="https://carport-builder.solve-now.com" target="_blank">carport-builder.solve-now.com</a></td>
-          <td class="num">324</td>
-          <td class="num">3</td>
-          <td class="num">0.93%</td>
-          <td class="num">1.6%</td>
+          <td class="num" data-value="324">324</td>
+          <td class="num" data-value="3">3</td>
+          <td class="num" data-value="0.9259259259259258">0.93%</td>
+          <td class="num" data-value="1.6339704473246255">1.6%</td>
         </tr><tr>
           <td><a href="https://concrete-contractor.solve-now.com" target="_blank">concrete-contractor.solve-now.com</a></td>
-          <td class="num">183</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">0.9%</td>
+          <td class="num" data-value="183">183</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="0.9228907156185385">0.9%</td>
         </tr><tr>
           <td><a href="https://mobile-caterer-highdesert.solve-now.com" target="_blank">mobile-caterer-highdesert.solve-now.com</a></td>
-          <td class="num">140</td>
-          <td class="num">1</td>
-          <td class="num">0.71%</td>
-          <td class="num">0.7%</td>
+          <td class="num" data-value="140">140</td>
+          <td class="num" data-value="1">1</td>
+          <td class="num" data-value="0.7142857142857143">0.71%</td>
+          <td class="num" data-value="0.7060366130415049">0.7%</td>
         </tr><tr>
           <td><a href="https://stitchandburn.solve-now.com" target="_blank">stitchandburn.solve-now.com</a></td>
-          <td class="num">131</td>
-          <td class="num">6</td>
-          <td class="num">4.58%</td>
-          <td class="num">0.7%</td>
+          <td class="num" data-value="131">131</td>
+          <td class="num" data-value="6">6</td>
+          <td class="num" data-value="4.580152671755725">4.58%</td>
+          <td class="num" data-value="0.6606485450602653">0.7%</td>
         </tr><tr>
           <td><a href="https://highdesertbossmoms.com" target="_blank">highdesertbossmoms.com</a></td>
-          <td class="num">82</td>
-          <td class="num">1</td>
-          <td class="num">1.22%</td>
-          <td class="num">0.4%</td>
+          <td class="num" data-value="82">82</td>
+          <td class="num" data-value="1">1</td>
+          <td class="num" data-value="1.2195121951219512">1.22%</td>
+          <td class="num" data-value="0.4135357304957386">0.4%</td>
         </tr><tr>
           <td><a href="https://moonfamilyenterprise.com" target="_blank">moonfamilyenterprise.com</a></td>
-          <td class="num">73</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">0.4%</td>
+          <td class="num" data-value="73">73</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="0.36814766251449893">0.4%</td>
         </tr><tr>
           <td><a href="https://nishiatslater.com" target="_blank">nishiatslater.com</a></td>
-          <td class="num">71</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">0.4%</td>
+          <td class="num" data-value="71">71</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="0.3580614251853346">0.4%</td>
         </tr><tr>
           <td><a href="https://401k-rollover-to-ira.moonfamilyenterprise.com" target="_blank">401k-rollover-to-ira.moonfamilyenterprise.com</a></td>
-          <td class="num">9</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">0.0%</td>
+          <td class="num" data-value="9">9</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="0.0453880679812396">0.0%</td>
         </tr><tr>
           <td><a href="https://go.moonfamilyenterprise.com" target="_blank">go.moonfamilyenterprise.com</a></td>
-          <td class="num">3</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">0.0%</td>
+          <td class="num" data-value="3">3</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="0.015129355993746534">0.0%</td>
         </tr><tr>
           <td><a href="https://keilbartfreedomsolutions.com" target="_blank">keilbartfreedomsolutions.com</a></td>
-          <td class="num">1</td>
-          <td class="num">0</td>
-          <td class="num">0.00%</td>
-          <td class="num">0.0%</td>
+          <td class="num" data-value="1">1</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0.00%</td>
+          <td class="num" data-value="0.0050431186645821776">0.0%</td>
         </tr><tr>
           <td><a href="https://mortgage-lender.keilbartfreedomsolutions.com" target="_blank">mortgage-lender.keilbartfreedomsolutions.com</a></td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td class="num">—</td>
-          <td class="num">0.0%</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">0</td>
+          <td class="num" data-value="0">—</td>
+          <td class="num" data-value="0">0.0%</td>
         </tr>
-      <tr style="border-top: 2px solid #2d3448; font-weight: 700;">
+      <tr class="total-row" style="border-top: 2px solid #2d3448; font-weight: 700;">
         <td style="color:#f8fafc">TOTAL</td>
         <td class="num" style="color:#60a5fa">19,829</td>
         <td class="num" style="color:#4ade80">43</td>
@@ -264,14 +267,14 @@
             <td class="num"><a href="gsc-weekly-2026-06-20.html">View →</a></td>
           </tr><tr class="">
             <td>May 29 – Jun 5, 2026</td>
-            <td class="num">14,292</td>
-            <td class="num">49</td>
-            <td class="num"><span class="no-link">—</span></td>
+            <td class="num">18,809</td>
+            <td class="num">65</td>
+            <td class="num"><a href="gsc-weekly-2026-06-05.html">View →</a></td>
           </tr><tr class="">
             <td>May 28 – Jun 4, 2026</td>
-            <td class="num">15,165</td>
-            <td class="num">44</td>
-            <td class="num"><span class="no-link">—</span></td>
+            <td class="num">19,016</td>
+            <td class="num">62</td>
+            <td class="num"><a href="gsc-weekly-2026-06-04.html">View →</a></td>
           </tr>
       </tbody>
     </table>
@@ -279,5 +282,31 @@
 </div>
 
 <div class="footer">WM Command Center · Data from Google Search Console · Generated by Billy</div>
+<script>
+(function(){
+  var headers = document.querySelectorAll('th.sortable');
+  headers.forEach(function(th){
+    th.addEventListener('click', function(){
+      var table = th.closest('table');
+      var tbody = table.querySelector('tbody');
+      var total = tbody.querySelector('.total-row');
+      var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr')).filter(function(r){ return !r.classList.contains('total-row'); });
+      var col = parseInt(th.getAttribute('data-col'), 10);
+      var asc = th.getAttribute('data-dir') !== 'asc';
+      headers.forEach(function(o){ o.removeAttribute('data-dir'); o.querySelector('.arrow').textContent = ''; });
+      th.setAttribute('data-dir', asc ? 'asc' : 'desc');
+      th.querySelector('.arrow').textContent = asc ? ' ▲' : ' ▼';
+      rows.sort(function(a,b){
+        var av = parseFloat(a.children[col].getAttribute('data-value')) || 0;
+        var bv = parseFloat(b.children[col].getAttribute('data-value')) || 0;
+        return asc ? av - bv : bv - av;
+      });
+      rows.forEach(function(r){ tbody.insertBefore(r, total); });
+    });
+  });
+  var def = document.querySelector('th.sortable[data-col="1"]');
+  if (def){ def.setAttribute('data-dir','desc'); def.querySelector('.arrow').textContent = ' ▼'; }
+})();
+</script>
 </body>
 </html>
