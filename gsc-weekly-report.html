@@ -59,6 +59,7 @@
 
   .chart-card { background: #1e2330; border: 1px solid #2d3448; border-radius: 16px; padding: 24px; margin-bottom: 32px; }
   .chart-empty { color: #475569; font-size: 13px; font-style: italic; padding: 8px 0; }
+  .week-hit:hover { fill: #60a5fa; fill-opacity: 0.07 !important; }
 
   .past-weeks .table-wrap { margin-bottom: 12px; }
   .past-weeks td a { color: #60a5fa; }
@@ -104,7 +105,7 @@
     <h1>Weekly GSC Report</h1>
     <p>WM Command Center · Jun 28 – Jul 4, 2026 · All domains</p>
   </div>
-  <div class="header-right"><strong>Generated</strong><br>Friday, July 10, 2026 at 1:58 PM</div>
+  <div class="header-right"><strong>Generated</strong><br>Friday, July 10, 2026 at 2:03 PM</div>
 </div>
 
 <div class="scope-bar" id="scopeBar">
@@ -484,6 +485,7 @@ window.__GSC = {
     // ── trend chart (scoped) + title ──
     set('trendTitle', singular ? ('Week-over-Week Trend — ' + activeDomain) : 'Week-over-Week Trend');
     set('chartCard', trendSvg(singular));
+    wireChart();
 
     // ── domain table (this week's rows) + label ──
     set('tableWeekLabel', w.label);
@@ -532,6 +534,16 @@ window.__GSC = {
     });
   }
 
+  // Click any week's dot / column band on the trend chart to jump to that week.
+  function wireChart(){
+    document.querySelectorAll('#chartCard .week-hit').forEach(function(el){
+      el.addEventListener('click', function(){
+        var wi = parseInt(el.getAttribute('data-wi'), 10);
+        if(!isNaN(wi) && wi !== weekIndex){ weekIndex = wi; render(); }
+      });
+    });
+  }
+
   // Scoped dual-axis SVG trend across ALL weeks in the dataset.
   function trendSvg(singular){
     if (WEEKS.length < 2) return '<div class="chart-empty">Trend chart appears once there are 2+ weeks of data.</div>';
@@ -563,15 +575,22 @@ window.__GSC = {
       var fill = (i===weekIndex) ? '#e2e8f0' : '#64748b';
       return '<text x="'+x(i)+'" y="'+(H-padB+20)+'" text-anchor="middle" fill="'+fill+'" font-size="10"'+cur+'>'+s+'</text>';
     }).join('');
-    var iDots=vals.map(function(v,i){var r=(i===weekIndex)?5:3.5;return '<circle cx="'+x(i)+'" cy="'+yI(v.i)+'" r="'+r+'" fill="#60a5fa"/>';}).join('');
-    var cDots=vals.map(function(v,i){var r=(i===weekIndex)?5:3.5;return '<circle cx="'+x(i)+'" cy="'+yC(v.c)+'" r="'+r+'" fill="#4ade80"/>';}).join('');
+    var iDots=vals.map(function(v,i){var r=(i===weekIndex)?5:3.5;return '<circle cx="'+x(i)+'" cy="'+yI(v.i)+'" r="'+r+'" fill="#60a5fa" style="cursor:pointer"/>';}).join('');
+    var cDots=vals.map(function(v,i){var r=(i===weekIndex)?5:3.5;return '<circle cx="'+x(i)+'" cy="'+yC(v.c)+'" r="'+r+'" fill="#4ade80" style="cursor:pointer"/>';}).join('');
+    // Selected-week vertical guide + full-height clickable band per week.
+    var guide = '<line x1="'+x(weekIndex)+'" y1="'+padT+'" x2="'+x(weekIndex)+'" y2="'+(padT+plotH)+'" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.5"/>';
+    var band = (n>1) ? (plotW/(n-1)) : plotW;
+    var hits = WEEKS.map(function(w,i){
+      return '<rect class="week-hit" data-wi="'+i+'" x="'+(x(i)-band/2)+'" y="'+padT+'" width="'+band+'" height="'+plotH+'" fill="#ffffff" fill-opacity="0" style="cursor:pointer"><title>'+w.label+' — click to view</title></rect>';
+    }).join('');
     return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Week-over-week impressions and clicks">'
-      + grid
+      + grid + guide
       + '<polyline points="'+iPts+'" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linejoin="round"/>'
       + '<polyline points="'+cPts+'" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linejoin="round"/>'
       + iDots + cDots + xl
       + '<text x="'+padL+'" y="14" fill="#3b82f6" font-size="11" font-weight="600">Impressions (left axis)</text>'
       + '<text x="'+(W-padR)+'" y="14" text-anchor="end" fill="#4ade80" font-size="11" font-weight="600">Clicks (right axis)</text>'
+      + hits
       + '</svg>';
   }
 
