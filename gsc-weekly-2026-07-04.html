@@ -64,6 +64,37 @@
   .past-weeks td a { color: #60a5fa; }
   .past-weeks .current-row { background: rgba(96,165,250,0.06); }
   .past-weeks .no-link { color: #475569; font-style: italic; }
+
+  /* ── Interactive controls ── */
+  .weeknav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .weekbtn { background: #161b27; border: 1px solid #2d3448; color: #94a3b8; font-size: 12px; font-weight: 600;
+             border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .weekbtn:hover:not(:disabled) { background: #232a3d; color: #e2e8f0; border-color: #3b465e; }
+  .weekbtn:disabled { opacity: .35; cursor: not-allowed; }
+  .goal-card.impressions .weekbtn:hover:not(:disabled) { border-color: #60a5fa; color: #60a5fa; }
+  .goal-card.clicks .weekbtn:hover:not(:disabled) { border-color: #4ade80; color: #4ade80; }
+
+  .scope-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; background: #161b27;
+               border: 1px solid #2d3448; border-radius: 12px; padding: 12px 18px; margin-bottom: 20px; }
+  .scope-bar .scope-label { font-size: 14px; color: #94a3b8; }
+  .scope-bar .scope-value { font-weight: 700; color: #f8fafc; }
+  .scope-bar.filtered { border-color: #60a5fa; box-shadow: 0 0 0 1px rgba(96,165,250,.25) inset; }
+  .scope-bar.filtered .scope-value { color: #60a5fa; }
+  .scope-bar .scope-week { font-size: 13px; color: #64748b; margin-left: auto; }
+  .reset-btn { background: transparent; border: 1px solid #3b465e; color: #94a3b8; font-size: 12px; font-weight: 600;
+               border-radius: 8px; padding: 5px 12px; cursor: pointer; transition: all .15s; }
+  .reset-btn:hover { border-color: #f87171; color: #f87171; }
+  .reset-btn[hidden] { display: none; }
+
+  tbody tr.domain-row { cursor: pointer; }
+  tbody tr.domain-row.active { background: rgba(96,165,250,0.12); }
+  .domain-name { color: #e2e8f0; font-weight: 500; }
+  tbody tr.domain-row:hover .domain-name { color: #60a5fa; }
+  .ext-link { display: inline-flex; align-items: center; justify-content: center; margin-left: 8px;
+              width: 22px; height: 22px; border-radius: 6px; border: 1px solid #2d3448; background: #161b27;
+              color: #64748b; text-decoration: none; font-size: 12px; vertical-align: middle; }
+  .ext-link:hover { color: #60a5fa; border-color: #60a5fa; }
+  .cell-domain { display: flex; align-items: center; }
 </style>
 </head>
 <body>
@@ -73,36 +104,40 @@
     <h1>Weekly GSC Report</h1>
     <p>WM Command Center · Jun 28 – Jul 4, 2026 · All domains</p>
   </div>
-  <div class="header-right"><strong>Generated</strong><br>Friday, July 10, 2026 at 1:34 PM</div>
+  <div class="header-right"><strong>Generated</strong><br>Friday, July 10, 2026 at 1:49 PM</div>
 </div>
+
+
 
 <div class="goal-cards">
   <div class="goal-card impressions">
+    
     <div class="label">Impressions</div>
     <div class="numbers">
-      <span class="actual">21,751</span>
-      <span class="goal-num">/ 333,400 goal</span>
+      <span class="actual" id="imprActual">21,751</span>
+      <span class="goal-num" id="imprGoal">/ 333,400 goal</span>
     </div>
-    <div class="pct">6.5% of weekly goal</div>
-    <div class="bar-track"><div class="bar-fill" style="width:6.5%"></div></div>
-    <div class="needed">Need <span>+311,649</span> more to hit goal</div>
-    <div><span class="delta delta-up">▲ 15.3% <span class="delta-abs">(+2,880)</span></span> <span class="delta-abs">vs Jun 21 – Jun 27, 2026</span></div>
+    <div class="pct" id="imprPct">6.5% of weekly goal</div>
+    <div id="imprBar"><div class="bar-track"><div class="bar-fill" style="width:6.5%"></div></div></div>
+    <div class="needed" id="imprNeeded">Need <span>+311,649</span> more to hit goal</div>
+    <div id="imprDelta"><span class="delta delta-up">▲ 15.3% <span class="delta-abs">(+2,880)</span></span> <span class="delta-abs">vs Jun 21 – Jun 27, 2026</span></div>
   </div>
   <div class="goal-card clicks">
+    
     <div class="label">Clicks</div>
     <div class="numbers">
-      <span class="actual">52</span>
-      <span class="goal-num">/ 5,000 goal</span>
+      <span class="actual" id="clkActual">52</span>
+      <span class="goal-num" id="clkGoal">/ 5,000 goal</span>
     </div>
-    <div class="pct">1.0% of weekly goal</div>
-    <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
-    <div class="needed">Need <span>+4,948</span> more to hit goal</div>
-    <div><span class="delta delta-up">▲ 15.6% <span class="delta-abs">(+7)</span></span> <span class="delta-abs">vs Jun 21 – Jun 27, 2026</span></div>
+    <div class="pct" id="clkPct">1.0% of weekly goal</div>
+    <div id="clkBar"><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div></div>
+    <div class="needed" id="clkNeeded">Need <span>+4,948</span> more to hit goal</div>
+    <div id="clkDelta"><span class="delta delta-up">▲ 15.6% <span class="delta-abs">(+7)</span></span> <span class="delta-abs">vs Jun 21 – Jun 27, 2026</span></div>
   </div>
 </div>
 
-<div class="section-title">Week-over-Week Trend</div>
-<div class="chart-card">
+<div class="section-title" id="trendTitle">Week-over-Week Trend</div>
+<div class="chart-card" id="chartCard">
   
   <svg viewBox="0 0 760 300" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Week-over-week impressions and clicks">
     <line x1="56" y1="24" x2="704" y2="24" stroke="#1e2330" stroke-width="1"/><text x="48" y="28" text-anchor="end" fill="#3b82f6" font-size="10">22k</text><text x="712" y="28" text-anchor="start" fill="#4ade80" font-size="10">65</text><line x1="56" y1="81" x2="704" y2="81" stroke="#1e2330" stroke-width="1"/><text x="48" y="85" text-anchor="end" fill="#3b82f6" font-size="10">16k</text><text x="712" y="85" text-anchor="start" fill="#4ade80" font-size="10">49</text><line x1="56" y1="138" x2="704" y2="138" stroke="#1e2330" stroke-width="1"/><text x="48" y="142" text-anchor="end" fill="#3b82f6" font-size="10">11k</text><text x="712" y="142" text-anchor="start" fill="#4ade80" font-size="10">33</text><line x1="56" y1="195" x2="704" y2="195" stroke="#1e2330" stroke-width="1"/><text x="48" y="199" text-anchor="end" fill="#3b82f6" font-size="10">5k</text><text x="712" y="199" text-anchor="start" fill="#4ade80" font-size="10">16</text><line x1="56" y1="252" x2="704" y2="252" stroke="#1e2330" stroke-width="1"/><text x="48" y="256" text-anchor="end" fill="#3b82f6" font-size="10">0</text><text x="712" y="256" text-anchor="start" fill="#4ade80" font-size="10">0</text>
@@ -114,7 +149,7 @@
   </svg>
 </div>
 
-<div class="section-title">All Domains — This Week</div>
+<div class="section-title">All Domains — <span id="tableWeekLabel">This Week</span></div>
 <div class="table-wrap">
   <table>
     <thead>
@@ -126,7 +161,7 @@
         <th class="num sortable" data-col="4">% of Total Impr.<span class="arrow"></span></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="domainBody">
       <tr>
           <td><a href="https://financial-advisorpro.com" target="_blank">financial-advisorpro.com</a></td>
           <td class="num" data-value="9414">9,414</td>
@@ -292,6 +327,7 @@
 </div>
 
 <div class="footer">WM Command Center · Data from Google Search Console · Generated by Billy</div>
+
 <script>
 (function(){
   var headers = document.querySelectorAll('th.sortable');
