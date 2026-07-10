@@ -104,7 +104,7 @@
     <h1>Weekly GSC Report</h1>
     <p>WM Command Center · Jun 28 – Jul 4, 2026 · All domains</p>
   </div>
-  <div class="header-right"><strong>Generated</strong><br>Friday, July 10, 2026 at 1:49 PM</div>
+  <div class="header-right"><strong>Generated</strong><br>Friday, July 10, 2026 at 1:56 PM</div>
 </div>
 
 <div class="scope-bar" id="scopeBar">
@@ -303,27 +303,27 @@
             <td>Jun 28 – Jul 4, 2026 <span class="delta-abs">(this week)</span></td>
             <td class="num">21,751</td>
             <td class="num">52</td>
-            <td class="num"><a href="gsc-weekly-2026-07-04.html">View →</a></td>
+            <td class="num"><a href="gsc-weekly-report.html?week=2026-07-04">View →</a></td>
           </tr><tr class="">
             <td>Jun 21 – Jun 27, 2026</td>
             <td class="num">18,871</td>
             <td class="num">45</td>
-            <td class="num"><a href="gsc-weekly-2026-06-27.html">View →</a></td>
+            <td class="num"><a href="gsc-weekly-report.html?week=2026-06-27">View →</a></td>
           </tr><tr class="">
             <td>Jun 14 – Jun 20, 2026</td>
             <td class="num">19,829</td>
             <td class="num">43</td>
-            <td class="num"><a href="gsc-weekly-2026-06-20.html">View →</a></td>
+            <td class="num"><a href="gsc-weekly-report.html?week=2026-06-20">View →</a></td>
           </tr><tr class="">
             <td>May 29 – Jun 5, 2026</td>
             <td class="num">18,809</td>
             <td class="num">65</td>
-            <td class="num"><a href="gsc-weekly-2026-06-05.html">View →</a></td>
+            <td class="num"><a href="gsc-weekly-report.html?week=2026-06-05">View →</a></td>
           </tr><tr class="">
             <td>May 28 – Jun 4, 2026</td>
             <td class="num">19,016</td>
             <td class="num">62</td>
-            <td class="num"><a href="gsc-weekly-2026-06-04.html">View →</a></td>
+            <td class="num"><a href="gsc-weekly-report.html?week=2026-06-04">View →</a></td>
           </tr>
       </tbody>
     </table>
@@ -342,9 +342,28 @@ window.__GSC = {
 (function(){
   var D = window.__GSC; if(!D || !D.weeks || !D.weeks.length) return;
   var WEEKS = D.weeks, GOALS = D.goals;
-  var weekIndex = WEEKS.findIndex(function(w){ return w.weekEnding === D.startWeek; });
+  // Initial state from URL params (shareable/bookmarkable), falling back to
+  // the page's default week and All domains.
+  var params = new URLSearchParams(window.location.search);
+  var qWeek = params.get('week');
+  var qDomain = params.get('domain');
+  var weekIndex = -1;
+  if (qWeek) weekIndex = WEEKS.findIndex(function(w){ return w.weekEnding === qWeek; });
+  if (weekIndex < 0) weekIndex = WEEKS.findIndex(function(w){ return w.weekEnding === D.startWeek; });
   if (weekIndex < 0) weekIndex = WEEKS.length - 1;
   var activeDomain = null; // null = all domains
+  if (qDomain && WEEKS.some(function(w){ return (w.domains||[]).some(function(d){ return d.domain === qDomain; }); })) {
+    activeDomain = qDomain;
+  }
+
+  // Keep the URL in sync with the current view so it can be shared/bookmarked.
+  function syncUrl(){
+    var p = new URLSearchParams();
+    p.set('week', WEEKS[weekIndex].weekEnding);
+    if (activeDomain) p.set('domain', activeDomain);
+    var qs = p.toString();
+    history.replaceState(null, '', qs ? ('?' + qs) : window.location.pathname);
+  }
 
   function fmtNum(n){ return Math.round(n).toLocaleString(); }
   function pctOf(v, goal){ return (v/goal*100); }
@@ -378,6 +397,7 @@ window.__GSC = {
   function set(id, html){ var el = document.getElementById(id); if(el) el.innerHTML = html; }
 
   function render(){
+    syncUrl();
     var w = WEEKS[weekIndex];
     var m = scopeMetrics(w);
     var pm = prevMetrics();
