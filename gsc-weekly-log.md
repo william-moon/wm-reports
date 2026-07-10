@@ -1,4 +1,60 @@
 
+## Week of Jun 28 – Jul 4, 2026
+- **Impressions:** 21,751 / 333,400 goal (6.5%)
+- **Clicks:** 52 / 5,000 goal (1.0%)
+- **Still needed:** +311,649 impressions · +4,948 clicks
+- **Top domain:** financial-advisorpro.com (9,414 impressions)
+
+| Domain | Impressions | Clicks |
+|--------|-------------|--------|
+| financial-advisorpro.com | 9,414 | 9 |
+| teamakademy.com | 5,663 | 0 |
+| azcorazulconstruction.com | 1,693 | 3 |
+| thewellorderedspace.com | 1,369 | 11 |
+| accountant-and-bookkeeping-services.solve-now.com | 1,046 | 4 |
+| clientsplease.com | 768 | 2 |
+| waddellenterprises.com | 501 | 1 |
+| carport-builder.solve-now.com | 334 | 4 |
+| mobile-caterer-highdesert.solve-now.com | 239 | 3 |
+| concrete-contractor.solve-now.com | 181 | 0 |
+| stitchandburn.solve-now.com | 149 | 12 |
+| nishiatslater.com | 143 | 0 |
+| moonfamilyenterprise.com | 134 | 0 |
+| highdesertbossmoms.com | 81 | 3 |
+| 401k-rollover-to-ira.moonfamilyenterprise.com | 26 | 0 |
+| keilbartfreedomsolutions.com | 5 | 0 |
+| mortgage-lender.keilbartfreedomsolutions.com | 3 | 0 |
+| go.moonfamilyenterprise.com | 2 | 0 |
+
+---
+
+## Week of Jun 21 – Jun 27, 2026
+- **Impressions:** 18,871 / 333,400 goal (5.7%)
+- **Clicks:** 45 / 5,000 goal (0.9%)
+- **Still needed:** +314,529 impressions · +4,955 clicks
+- **Top domain:** financial-advisorpro.com (7,306 impressions)
+
+| Domain | Impressions | Clicks |
+|--------|-------------|--------|
+| financial-advisorpro.com | 7,306 | 4 |
+| teamakademy.com | 5,046 | 1 |
+| azcorazulconstruction.com | 1,616 | 8 |
+| thewellorderedspace.com | 1,495 | 13 |
+| accountant-and-bookkeeping-services.solve-now.com | 1,240 | 0 |
+| clientsplease.com | 614 | 4 |
+| waddellenterprises.com | 424 | 3 |
+| carport-builder.solve-now.com | 274 | 3 |
+| concrete-contractor.solve-now.com | 219 | 0 |
+| stitchandburn.solve-now.com | 175 | 5 |
+| moonfamilyenterprise.com | 164 | 0 |
+| mobile-caterer-highdesert.solve-now.com | 123 | 2 |
+| highdesertbossmoms.com | 100 | 1 |
+| nishiatslater.com | 64 | 1 |
+| 401k-rollover-to-ira.moonfamilyenterprise.com | 8 | 0 |
+| go.moonfamilyenterprise.com | 3 | 0 |
+
+---
+
 ## Week of Jun 14 – Jun 20, 2026
 - **Impressions:** 19,829 / 333,400 goal (5.9%)
 - **Clicks:** 43 / 5,000 goal (0.9%)
