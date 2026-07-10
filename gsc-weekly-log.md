@@ -1,5 +1,31 @@
-# GSC Weekly Report Log
-*Goal: 333,400 impressions/week · 5,000 clicks/week*
+
+## Week of Jul 4 – Jul 10, 2026
+- **Impressions:** 17,784 / 333,400 goal (5.3%)
+- **Clicks:** 46 / 5,000 goal (0.9%)
+- **Still needed:** +315,616 impressions · +4,954 clicks
+- **Top domain:** financial-advisorpro.com (6,277 impressions)
+
+| Domain | Impressions | Clicks |
+|--------|-------------|--------|
+| financial-advisorpro.com | 6,277 | 4 |
+| teamakademy.com | 4,080 | 1 |
+| thewellorderedspace.com | 3,696 | 20 |
+| azcorazulconstruction.com | 1,048 | 5 |
+| accountant-and-bookkeeping-services.solve-now.com | 934 | 1 |
+| clientsplease.com | 485 | 0 |
+| waddellenterprises.com | 388 | 1 |
+| carport-builder.solve-now.com | 216 | 0 |
+| stitchandburn.solve-now.com | 141 | 9 |
+| concrete-contractor.solve-now.com | 124 | 1 |
+| highdesertbossmoms.com | 92 | 3 |
+| moonfamilyenterprise.com | 90 | 0 |
+| mobile-caterer-highdesert.solve-now.com | 88 | 0 |
+| nishiatslater.com | 75 | 0 |
+| 401k-rollover-to-ira.moonfamilyenterprise.com | 47 | 0 |
+| keilbartfreedomsolutions.com | 2 | 1 |
+| go.moonfamilyenterprise.com | 1 | 0 |
+
+---
 
 ## Week of Jun 28 – Jul 4, 2026
 - **Impressions:** 21,751 / 333,400 goal (6.5%)
