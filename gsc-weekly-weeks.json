@@ -1080,97 +1080,97 @@
   {
     "weekEnding": "2026-07-10",
     "label": "Jul 4 – Jul 10, 2026",
-    "totalImpressions": 17784,
-    "totalClicks": 46,
+    "totalImpressions": 22767,
+    "totalClicks": 54,
     "domains": [
       {
         "domain": "financial-advisorpro.com",
-        "impressions": 6277,
-        "clicks": 4
+        "impressions": 8970,
+        "clicks": 5
       },
       {
         "domain": "teamakademy.com",
-        "impressions": 4080,
-        "clicks": 1
+        "impressions": 4967,
+        "clicks": 2
       },
       {
         "domain": "thewellorderedspace.com",
-        "impressions": 3696,
-        "clicks": 20
+        "impressions": 4349,
+        "clicks": 24
       },
       {
         "domain": "azcorazulconstruction.com",
-        "impressions": 1048,
+        "impressions": 1305,
         "clicks": 5
       },
       {
         "domain": "accountant-and-bookkeeping-services.solve-now.com",
-        "impressions": 934,
+        "impressions": 1032,
         "clicks": 1
       },
       {
         "domain": "clientsplease.com",
-        "impressions": 485,
+        "impressions": 593,
         "clicks": 0
       },
       {
         "domain": "waddellenterprises.com",
-        "impressions": 388,
+        "impressions": 453,
         "clicks": 1
       },
       {
         "domain": "carport-builder.solve-now.com",
-        "impressions": 216,
+        "impressions": 271,
         "clicks": 0
-      },
-      {
-        "domain": "stitchandburn.solve-now.com",
-        "impressions": 141,
-        "clicks": 9
       },
       {
         "domain": "concrete-contractor.solve-now.com",
-        "impressions": 124,
+        "impressions": 161,
         "clicks": 1
       },
       {
-        "domain": "highdesertbossmoms.com",
-        "impressions": 92,
-        "clicks": 3
-      },
-      {
-        "domain": "moonfamilyenterprise.com",
-        "impressions": 90,
-        "clicks": 0
+        "domain": "stitchandburn.solve-now.com",
+        "impressions": 155,
+        "clicks": 9
       },
       {
         "domain": "mobile-caterer-highdesert.solve-now.com",
-        "impressions": 88,
+        "impressions": 130,
         "clicks": 0
       },
       {
+        "domain": "moonfamilyenterprise.com",
+        "impressions": 124,
+        "clicks": 2
+      },
+      {
+        "domain": "highdesertbossmoms.com",
+        "impressions": 103,
+        "clicks": 3
+      },
+      {
         "domain": "nishiatslater.com",
-        "impressions": 75,
+        "impressions": 80,
         "clicks": 0
       },
       {
         "domain": "401k-rollover-to-ira.moonfamilyenterprise.com",
-        "impressions": 47,
+        "impressions": 62,
         "clicks": 0
       },
       {
         "domain": "keilbartfreedomsolutions.com",
-        "impressions": 2,
+        "impressions": 8,
         "clicks": 1
       },
       {
-        "domain": "go.moonfamilyenterprise.com",
-        "impressions": 1,
+        "domain": "mortgage-lender.keilbartfreedomsolutions.com",
+        "impressions": 2,
         "clicks": 0
       },
       {
-        "domain": "mortgage-lender.keilbartfreedomsolutions.com",
-        "impressions": 0,
+        "domain": "go.moonfamilyenterprise.com",
+        "impressions": 2,
         "clicks": 0
       }
     ]
