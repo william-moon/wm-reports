@@ -79,8 +79,15 @@
   {
     "weekEnding": "2026-07-10",
     "label": "Jul 4 – Jul 10, 2026",
-    "impressions": 22767,
-    "clicks": 54,
+    "impressions": 27494,
+    "clicks": 63,
     "archive": "gsc-weekly-2026-07-10.html"
+  },
+  {
+    "weekEnding": "2026-07-17",
+    "label": "Jul 11 – Jul 17, 2026",
+    "impressions": 18090,
+    "clicks": 46,
+    "archive": "gsc-weekly-2026-07-17.html"
   }
 ]
