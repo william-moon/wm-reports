@@ -128,8 +128,15 @@
   {
     "weekEnding": "2026-08-28",
     "label": "Aug 22 – Aug 28, 2026",
-    "impressions": 12956,
-    "clicks": 29,
+    "impressions": 18497,
+    "clicks": 49,
     "archive": "gsc-weekly-2026-08-28.html"
+  },
+  {
+    "weekEnding": "2026-09-04",
+    "label": "Aug 29 – Sep 4, 2026",
+    "impressions": 18116,
+    "clicks": 46,
+    "archive": "gsc-weekly-2026-09-04.html"
   }
 ]

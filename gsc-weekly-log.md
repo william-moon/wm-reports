@@ -1,3 +1,33 @@
+# GSC Weekly Report Log
+*Goal: 333,400 impressions/week · 5,000 clicks/week*
+
+## Week of Aug 29 – Sep 4, 2026
+- **Impressions:** 18,116 / 333,400 goal (5.4%)
+- **Clicks:** 46 / 5,000 goal (0.9%)
+- **Still needed:** +315,284 impressions · +4,954 clicks
+- **Top domain:** teamakademy.com (9,526 impressions)
+
+| Domain | Impressions | Clicks |
+|--------|-------------|--------|
+| teamakademy.com | 9,526 | 4 |
+| financial-advisorpro.com | 1,549 | 6 |
+| accountant-and-bookkeeping-services.solve-now.com | 1,347 | 0 |
+| azcorazulconstruction.com | 1,302 | 1 |
+| thewellorderedspace.com | 1,241 | 20 |
+| waddellenterprises.com | 1,117 | 3 |
+| clientsplease.com | 787 | 1 |
+| carport-builder.solve-now.com | 351 | 0 |
+| moonfamilyenterprise.com | 182 | 0 |
+| mobile-caterer-highdesert.solve-now.com | 179 | 1 |
+| concrete-contractor.solve-now.com | 168 | 1 |
+| stitchandburn.solve-now.com | 137 | 7 |
+| highdesertbossmoms.com | 89 | 1 |
+| 401k-rollover-to-ira.moonfamilyenterprise.com | 84 | 0 |
+| nishiatslater.com | 52 | 1 |
+| keilbartfreedomsolutions.com | 4 | 0 |
+| mortgage-lender.keilbartfreedomsolutions.com | 1 | 0 |
+
+---
 
 ## Week of Aug 22 – Aug 28, 2026
 - **Impressions:** 12,956 / 333,400 goal (3.9%)
